@@ -2,14 +2,14 @@
 
 module.exports = {
     app: {
-        title: 'INDIX CHALLENGE',
-        description: 'Product Ingestion and Reporting',
-        keywords: 'Challenge, Product Ingestion'
+        title: 'Blood Donat',
+        description: 'Connects Donars and Patients',
+        keywords: 'Donate Blood'
     },
     port: process.env.PORT || 8079,
     secure: process.env.SECURE || false,
     templateEngine: 'swig',
-    sessionSecret: 'Indix Challenge - Session Secret',
+    sessionSecret: 'Nothing :)',
     assets: {
         lib: {
             css: [
