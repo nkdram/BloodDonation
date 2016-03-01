@@ -4,7 +4,7 @@
 // INTRO console.log message ( Welcome to Product Stats! )
 // /////////////////////////////////////////////////////
 console.log(
-    '%cWelcome to %cIndix %cProduct Stats'
+    '%cWelcome to %cBlood %cDonation App'
     ,'color:#879aa5; font:normal 1.3em/1.2em arial'
     ,'color:#0070AF; font:normal 1.6em/1.1em arial'
     ,'color:#009B94; font:normal 1.4em/1.3em arial'

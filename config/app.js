@@ -28,7 +28,7 @@ module.exports =function(){
 // all environments
     app.set('port', process.env.PORT || 8079);
 
-     app.locals.title = 'Indix Challenge';
+     app.locals.title = 'Blood Donation';
 
     app.locals.jsFiles = config.getJavaScriptAssets();
     app.locals.cssFiles = config.getCSSAssets();

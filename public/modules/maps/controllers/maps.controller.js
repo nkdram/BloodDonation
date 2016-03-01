@@ -1,8 +1,8 @@
 (function () {
     'use strict';
 
-    angular.module('esrimaps').controller('MapsController', ['$scope', 'Authentication','$http','esriLoader','$uibModal','$log',
-        function ($scope, Authentication,$http,esriLoader , $uibModal, $log) {
+    angular.module('esrimaps').controller('MapsController', ['$scope', '$http','esriLoader','$uibModal','$log',
+        function ($scope,$http,esriLoader , $uibModal, $log) {
              var self = this;
              esriLoader.require([
                  'esri/Map',
@@ -39,7 +39,10 @@
                                  zoom: 15
                              });
 
-
+                             //Initial Load
+                             if (!$scope.$$phase){
+                                 $scope.$apply();
+                             }
                              self.onViewCreated = function(view) {
                                  self.view = view;
                              };
@@ -55,6 +58,7 @@
                                  var pictureMarkerSymbol = new PictureMarkerSymbol('/assets/modules/core/img/current.png', 25, 25);
 
                                  self.loadMarker(lat,lng,pictureMarkerSymbol);
+
                              });
 
                              self.loadMarker = function(lat,long,symbol,attribute){

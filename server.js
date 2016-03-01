@@ -14,4 +14,4 @@ app.listen(app.get('port'));
 exports = module.exports = app;
 
 // Logging initialization
-console.log('Indix APP started on port 8079');
+console.log('Blood Donation APP started on port 8079');

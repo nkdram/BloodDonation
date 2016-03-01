@@ -2,7 +2,7 @@
 
 module.exports = {
     app: {
-        title: 'Blood Donat',
+        title: 'Blood Donation',
         description: 'Connects Donars and Patients',
         keywords: 'Donate Blood'
     },
