@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html ng-app="ngcTableDirectiveTest">
+<head>
+    <title>Scrolls Template</title>
+    <link href="test.css" rel="stylesheet" type="text/css">
+    <link href="../dist/latest/ng-cells.css" rel="stylesheet" type="text/css">
+
+    <script src="../bower_components/angular/angular.js"></script>
+    <script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="../dist/latest/ng-cells.js"></script>
+    <script src="test-noscroll.js"></script>
+
+</head>
+<body>
+    <div ng-controller="TestCtrl">
+        <h1>No Horizontal scroll</h1>
+        <div ngc-table
+             style="min-width: 1000px;"
+                data="data"
+                left-column-number="4" left-column-widths="'40px'"
+                center-column-number="12" center-column-widths="'40px'"
+                right-column-number="6" right-column-widths="['40px']"
+                header-row-number="2" header-row-heights="['15px']"
+                row-number='12' row-heights="['14px']"
+                footer-row-number="3" footer-row-heights="'15px'">
+
+            <div ngc-range top="0" bottom="197" left="0" right="194" format-fn="cellFormatRH" ></div>
+        </div>
+
+        <h1>No Vertical scroll</h1>
+        <div ngc-table
+             style="min-width: 670px;"
+             data="data"
+             left-column-number="3" left-column-widths="'40px'"
+             center-column-number="6" center-column-widths="'40px'"
+             right-column-number="6" right-column-widths="['40px']"
+             header-row-number="2" header-row-heights="['15px', '15px']"
+             row-number='16' row-heights="['15px']"
+             footer-row-number="3" footer-row-heights="'15px'">
+
+            <div ngc-range top="0" bottom="197" left="0" right="194" format-fn="cellFormatRH" ></div>
+        </div>
+
+        <h1>No scrolls</h1>
+        <div ngc-table
+             style="min-width: 950px;"
+             data="data"
+             left-column-number="3" left-column-widths="'40px'"
+             center-column-number="12" center-column-widths="'40px'"
+             right-column-number="6" right-column-widths="['40px']"
+             header-row-number="2" header-row-heights="['15px']"
+             row-number='16' row-heights="['15px']"
+             footer-row-number="3" footer-row-heights="'15px'">
+
+            <div ngc-range top="0" bottom="197" left="0" right="194" format-fn="cellFormatRH" ></div>
+        </div>
+    </div>
+</body>
+</html>

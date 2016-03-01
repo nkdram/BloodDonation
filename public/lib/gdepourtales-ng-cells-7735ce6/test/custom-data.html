@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html ng-app="ngcTableDirectiveTest">
+<head>
+    <title>Test Template</title>
+    <link href="../dist/latest/ng-cells.css" rel="stylesheet" type="text/css">
+
+    <script src="../bower_components/angular/angular.min.js"></script>
+    <script src="../bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="../dist/latest/ng-cells.js"></script>
+
+    <script>
+        angular.module('ngcTableDirectiveTest', ['ngcTableDirective'])
+                .controller('TestCtrl', function($scope) {
+                    $scope.data = [];
+
+                    var n = 1000;
+
+                    for (var row = 0; row < n; row++) {
+                        var rowContent = [];
+                        for (var col = 0; col < n; col++) {
+                            rowContent.push(row * col + col);
+                        }
+                        $scope.data.push(rowContent);
+                    }
+
+                    $scope.customDataFn = function(data, row, col) {
+                        return data[n - row - 1][n - col - 1];
+                    }
+
+                });
+    </script>
+
+</head>
+<body>
+<div ng-controller="TestCtrl">
+    <div ngc-table data="data"
+         scroll-delay="0"
+         custom-data-value-fn="customDataFn"></div>
+</div>
+</body>
+</html>

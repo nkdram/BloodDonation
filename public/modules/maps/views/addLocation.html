@@ -1,0 +1,79 @@
+<!--<script type="text/ng-template" id="addLocation.html">-->
+
+        <div class="modal-header">
+        <div ng-if="error">
+            <uib-alert type="danger" role="alert" dismiss-on-timeout="10000" close="closeError()">{{error}}
+            </uib-alert>
+        </div>
+        </div>
+        <div class="modal-body" ng-init="loadDefaultLocation()">
+            <h2>Please provide your details ..</h2>
+
+            <div>
+                <form role="form" name="signupForm" ng-submit="addLocation()" novalidate autocomplete="off"
+                      class="user-loginform signin">
+                    <fieldset>
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" required id="firstName" name="firstName" class="form-control"
+                                   ng-model="credentials.firstName" placeholder="First Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" name="lastName" class="form-control"
+                                   ng-model="credentials.lastName" placeholder="Last Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="text" id="email" name="email" class="form-control"
+                                   ng-model="credentials.email" placeholder="Email" ng-required="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="text" id="phone" name="phone" class="form-control"
+                                   ng-model="credentials.phone" placeholder="Phone" ng-required="true">
+                        </div>
+                        <div class="form-group">
+                            <label>Address: </label>
+                            <small> Please type area, city , zipcode</small><br/>
+                            <p>{{credentials.addressComponent.formatted_address}}
+                                [lat: {{credentials.addressComponent.geometry.location.lat}},
+                                lng: {{credentials.addressComponent.geometry.location.lng}}]</p>
+                            <ui-select ng-model="credentials.addressComponent"
+                                       theme="bootstrap"
+                                       reset-search-input="false"
+                                       >
+                                <ui-select-match placeholder="Enter an address...">
+                                    {{$select.selected.formatted_address}}</ui-select-match>
+                                <ui-select-choices repeat="address in addresses | filter: $select.search track by $index"
+                                                   refresh="refreshAddresses($select.search)"
+                                                   refresh-delay="0">
+                                    <div ng-bind-html="address.formatted_address"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Blood Group</label>
+                            <ui-select ng-model="credentials.bloodGroup" theme="bootstrap" >
+                                <ui-select-match placeholder="Select a Blood Group">
+                                    {{$select.selected.group}}</ui-select-match>
+                                <ui-select-choices repeat="bg in bloodgroups  | filter: $select.search">
+                                    <span ng-bind-html="bg.group"></span>
+                                </ui-select-choices>
+                            </ui-select>
+
+                        </div>
+                        <div class="user-submit">
+                            <button type="submit"
+                                    ng-disabled="signupForm.$invalid"
+                                    class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Add Location
+                            </button>
+                            <button type="button" class="btn btn-warning" ng-click="cancel()"><i class="glyphicon glyphicon-minus"></i> Cancel</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+
+<!--
+</script>-->

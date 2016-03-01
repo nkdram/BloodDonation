@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html ng-app="ngcTableDirectiveTest">
+<head>
+    <title>Minimal</title>
+    <link href="../dist/latest/ng-cells.css" rel="stylesheet" type="text/css">
+    <style>
+        .cell {
+            text-align: center;
+            vertical-align: middle;
+            width:60px;
+        }
+    </style>
+    <script src="../bower_components/angular/angular.min.js"></script>
+    <script src="../bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="../dist/latest/ng-cells.js"></script>
+    <script>
+        angular.module('ngcTableDirectiveTest', ['ngcTableDirective'])
+                .controller('TestCtrl', function($scope) {
+                    $scope.data = [];
+
+                    for (var row = 0; row < 1000; row++) {
+                        var rowContent = [];
+                        for (var col = 0; col < 1000; col++) {
+                            rowContent.push(row * col + col);
+                        }
+                        $scope.data.push(rowContent);
+                    }
+
+                });
+
+    </script>
+
+</head>
+<body>
+<div ng-controller="TestCtrl">
+    <div ngc-table data="data"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html ng-app="ngcTableDirectiveTest">
+<head>
+    <title>Ranges and formats Test</title>
+    <link href="../dist/latest/ng-cells.css" rel="stylesheet" type="text/css">
+
+    <style type="text/css">
+        .ngc.cell {
+            font-size: 11px;
+        }
+    </style>
+    <script src="../bower_components/angular/angular.min.js"></script>
+    <script src="../bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="../dist/latest/ng-cells.js"></script>
+    <script src="test.js"></script>
+
+    <style>
+        * {
+            font-family: Helvetica, serif;
+        }
+
+        table {
+            font-size: 10px;
+        }
+
+        .cell {
+            background-color: lightgrey;
+            border: 1px solid #ffffff;
+        }
+
+        .cell.center.first,
+        .cell.right.first {
+            border-left: 2px solid darkblue;
+        }
+
+        tr.header.last .cell,
+        tr.middle.last .cell {
+            border-bottom: 2px solid darkblue;
+        }
+
+         .cell.test-range1 {
+             background-color: red;
+             color: #ffffff;
+             text-align: center;
+         }
+
+        .cell.test-range2 {
+            background-color: #ffff00;
+            color: #000000;
+            text-align: center;
+        }
+
+         .cell.test-range3 {
+             background-color: green;
+             color: #ffffff;
+             text-align: center;
+
+         }
+
+        .cell.test-range4 {
+            background-color: blue;
+            color: #ffffff;
+            text-align: center;
+        }
+
+    </style>
+
+</head>
+<body>
+    <div ng-controller="TestCtrl">
+        <ngc-table
+                data="data"
+                scroll-delay="0"
+                show-column-names='false'
+                left-column-number="5" left-column-widths="['40px']"
+                center-column-number="10" center-column-widths="'60px'"
+                right-column-number="5" right-column-widths="['60px', '60px', '60px', '45px', '50px', '55px']"
+                header-row-number="5" header-row-heights="['30px', '15px']"
+                row-number='10' row-heights="['14px']"
+                footer-row-number="5" footer-row-heights="'24px'" show-footer="true">
+
+            <ngc-range top="0" bottom="1000" left="0" right="5" format-fn="cellFormatRH"></ngc-range>
+            <ngc-range top="3" bottom="8" left="3" right="998" format-fn="cellFormatFn1" clazz="'test-range1'"></ngc-range>
+            <ngc-range top="10" bottom="12" left="6" right="15" format-fn="cellFormatFn1" clazz="'test-range2'"></ngc-range>
+            <ngc-range top="13" bottom="30" left="3" right="998" format-fn="cellFormatFn2" clazz="'test-range3'"></ngc-range>
+            <ngc-range top="990" bottom="998" left="3" right="997" clazz="'test-range4'"></ngc-range>
+
+        </ngc-table>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html ng-app="ngcTableDirectiveTest">
+<head>
+    <title>Performance Test</title>
+    <link href="test.css" rel="stylesheet" type="text/css">
+
+    <link href="../dist/latest/ng-cells.css" rel="stylesheet" type="text/css">
+
+    <style type="text/css">
+        .ngc.cell {
+            font-size: 11px;
+        }
+    </style>
+    <script src="../bower_components/angular/angular.min.js"></script>
+    <script src="../bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="../dist/latest/ng-cells.js"></script>
+    <script src="performance-test.js"></script>
+
+</head>
+<body>
+    <div ng-controller="TestCtrl">
+        <ngc-table
+                data="data"
+                left-column-number="2" left-column-widths="'60px'"
+                center-column-number="10" center-column-widths="['60px']"
+                right-column-number="2" right-column-widths="['60px']"
+                header-row-number="2" header-row-heights="['30px', '15px']"
+                row-number='20' row-heights="['41px', '14px']"
+                footer-row-number="3" footer-row-heights="'24px'">
+        </ngc-table>
+
+    </div>
+</body>
+</html>

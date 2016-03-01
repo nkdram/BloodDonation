@@ -1,0 +1,10 @@
+
+table.ngc {
+    border-collapse: collapse;
+    border-spacing: 0;
+    table-layout: fixed;
+}
+
+div.ngc.scroll-wrapper {
+    display: inline-table;
+}

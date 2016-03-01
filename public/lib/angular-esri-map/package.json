@@ -1,0 +1,145 @@
+{
+  "_args": [
+    [
+      "angular-esri-map",
+      "D:\\Node Apps\\Task\\IndixChallenge"
+    ]
+  ],
+  "_from": "angular-esri-map@latest",
+  "_id": "angular-esri-map@1.1.2",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/angular-esri-map",
+  "_nodeVersion": "4.2.4",
+  "_npmOperationalInternal": {
+    "host": "packages-5-east.internal.npmjs.com",
+    "tmp": "tmp/angular-esri-map-1.1.2.tgz_1455474448991_0.47418132424354553"
+  },
+  "_npmUser": {
+    "email": "tom@tomwayson.com",
+    "name": "tomwayson"
+  },
+  "_npmVersion": "2.14.12",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "angular-esri-map",
+    "raw": "angular-esri-map",
+    "rawSpec": "",
+    "scope": null,
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/angular-esri-map/-/angular-esri-map-1.1.2.tgz",
+  "_shasum": "2dd7b5408c81b0f812e0d2eea70ccbe717412d1a",
+  "_shrinkwrap": null,
+  "_spec": "angular-esri-map",
+  "_where": "D:\\Node Apps\\Task\\IndixChallenge",
+  "author": {
+    "email": "twayson@esri.com",
+    "name": "Tom Wayson",
+    "url": "http://tomwayson.com"
+  },
+  "bugs": {
+    "url": "https://github.com/Esri/angular-esri-map/issues"
+  },
+  "contributors": [
+    {
+      "name": "Javier Abadía",
+      "email": "javier.abadia@esri.es",
+      "url": "https://github.com/jabadia"
+    },
+    {
+      "name": "Dave Bouwman",
+      "email": "DBouwman@esri.com",
+      "url": "https://github.com/dbouwman"
+    },
+    {
+      "name": "Patrick Arlt",
+      "email": "parlt@esri.com",
+      "url": "http://patrickarlt.com"
+    },
+    {
+      "name": "Matt Priour",
+      "email": "mpriour@esr.com",
+      "url": "https://github.com/mpriour"
+    },
+    {
+      "name": "Jacob Wasilkowski",
+      "email": "JWasilkowski@esri.com",
+      "url": "https://github.com/jwasil"
+    },
+    {
+      "name": "Tom Wayson",
+      "email": "twayson@esri.com",
+      "url": "http://tomwayson.com"
+    }
+  ],
+  "dependencies": {},
+  "description": "A collection of directives to help you use Esri maps and services in your Angular applications",
+  "devDependencies": {
+    "angular": "^1.4.7",
+    "angular-mocks": "^1.4.7",
+    "browser-sync": "~1.6.1",
+    "chai": "^3.4.1",
+    "eslint": "^1.9.0",
+    "gh-release": "^2.0.1",
+    "gulp": "^3.8.9",
+    "gulp-angular-protractor": "~0.0.2",
+    "gulp-clean": "~0.3.0",
+    "gulp-concat": "~2.2.0",
+    "gulp-eslint": "^1.0.0",
+    "gulp-gh-pages": "^0.4.0",
+    "gulp-ng-annotate": "^0.3.3",
+    "gulp-ngdocs": "^0.2.13",
+    "gulp-rename": "~1.2.0",
+    "gulp-strip-debug": "~0.3.0",
+    "gulp-uglify": "~0.3.0",
+    "gulp-util": "~2.2.16",
+    "jasmine-core": "^2.3.4",
+    "karma": "^0.13.15",
+    "karma-chrome-launcher": "^0.2.1",
+    "karma-coverage": "^0.5.3",
+    "karma-firefox-launcher": "^0.1.7",
+    "karma-jasmine": "^0.3.6",
+    "karma-phantomjs-launcher": "^0.2.1",
+    "phantomjs": "^1.9.18",
+    "protractor": "~2.2.0",
+    "run-sequence": "~0.3.6"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "2dd7b5408c81b0f812e0d2eea70ccbe717412d1a",
+    "tarball": "http://registry.npmjs.org/angular-esri-map/-/angular-esri-map-1.1.2.tgz"
+  },
+  "gitHead": "1ef3b5f189b61f9684a412338dfeb00a5f9dda2a",
+  "homepage": "https://github.com/Esri/angular-esri-map",
+  "keywords": [
+    "Angular",
+    "Esri"
+  ],
+  "license": "Apache",
+  "main": "dist/angular-esri-map.js",
+  "maintainers": [
+    {
+      "name": "tomwayson",
+      "email": "tom@tomwayson.com"
+    }
+  ],
+  "name": "angular-esri-map",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Esri/angular-esri-map.git"
+  },
+  "scripts": {
+    "build": "gulp build",
+    "release": "./scripts/release.sh",
+    "start": "gulp",
+    "test": "karma start test/unit/karma.conf.js --browsers Firefox --single-run"
+  },
+  "version": "1.1.2"
+}

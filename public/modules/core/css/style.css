@@ -1,0 +1,30 @@
+
+.mid-section
+{
+    padding-top: 40px;
+
+}
+
+.signup
+{
+    cursor: hand;
+
+}
+
+
+.donateBlood {
+    position: absolute;
+    z-index: 100;
+}
+
+#results {
+    top: 22%;
+    right: 20px;
+    position: absolute;
+    z-index: 99;
+    background-color: white;
+    border-radius: 8px;
+    padding: 10px;
+    opacity: 0.75;
+    font-size: 0.9em;
+}

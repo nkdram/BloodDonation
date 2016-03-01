@@ -1,0 +1,34 @@
+<section class="row" ng-controller="AuthenticationController">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3">
+                <div ng-if="error">
+                    <uib-alert type="danger" role="alert" dismiss-on-timeout="10000" close="closeError()">{{error}}</uib-alert>
+                </div>
+                <div class="login-section">
+                    <h2>Welcome!</h2>
+                    <p>Login with your Indix account information.</p>
+                    <div class="login-box">
+                        <h3><i class="glyphicon glyphicon-user"></i> Login</h3>
+                        <form role="form" ng-submit="signin()" autocomplete="off" class="user-loginform signin">
+                            <fieldset>
+                                <div class="form-group">
+                                    <label for="username">Username</label>
+                                    <input type="text" id="username" name="username" class="form-control" ng-model="credentials.username" placeholder="Username">
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <input type="password" id="password" name="password" class="form-control" ng-model="credentials.password" placeholder="Password">
+                                    <div class="forgot-password"><a href="/#!/password/forgot"><i class="glyphicon glyphicon-hand-right"></i> Forgot Password ?</a></div>
+                                </div>
+                                <div class="user-submit">
+                                    <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-lock"></i> Login</button>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

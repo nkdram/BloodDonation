@@ -1,0 +1,41 @@
+<div class="container" ng-controller="HeaderController">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" ng-click="toggleCollapsibleMenu()"
+                            data-target="#bs-navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <nav class="collapse navbar-collapse" uib-collapse="!isCollapsed" role="navigation">
+                    <ul class="nav navbar-nav" ng-if="menu.shouldRender(authentication.user);">
+                        <li ng-repeat="item in menu.items | orderBy: 'position'"
+                            ng-if="item.shouldRender(authentication.user);" ng-switch="item.menuItemType"
+                            ui-route="{{item.uiRoute}}" class="{{item.menuItemClass}}"
+                            ng-class="{active: ($uiRoute), dropdown: item.menuItemType === 'dropdown'}"
+                            uib-dropdown="item.menuItemType === 'dropdown'">
+                            <a ng-switch-when="dropdown" class="dropdown-toggle" uib-dropdown-toggle role="button">
+                                {{::item.title}}&nbsp;<b class="caret"></b>
+                            </a>
+                            <ul ng-switch-when="dropdown" uib-dropdown-menu>
+                                <li ng-repeat="subitem in item.items | orderBy: 'position'"
+                                    ng-if="subitem.shouldRender(authentication.user);"
+                                    ui-route="{{subitem.uiRoute}}" ng-class="{active: $uiRoute}">
+                                    <a href="/#!/{{subitem.link}}" ng-bind="subitem.title"></a>
+                                </li>
+                            </ul>
+                            <a ng-switch-default href="/#!/{{item.link}}" ng-bind="item.title"></a>
+                        </li>
+                    </ul>
+
+                    <!-- /.navbar-collapse -->
+                </nav>
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+    </div>
+</div>

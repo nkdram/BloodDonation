@@ -1,0 +1,29 @@
+<nav class="navbar navbar-default" role="navigation"  data-ng-controller="HeaderController">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Indix Challenge</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" >
+            <ul class="nav navbar-nav" ng-if="menu">
+                <li ><a href="#!/dashboard">Dashboard</a></li>
+                <li><a href="#!/products">Product Upload</a></li>
+                <li><a href="#!/find">Find</a></li>
+            </ul>
+            <ul class="nav navbar-nav pull-right" ng-if="!menu">
+                <li class="signup" ><a href="#!/signup">Sign-up</a></li>
+            </ul>
+            <ul class="nav navbar-nav pull-right" ng-if="menu">
+                <li class="signup"><a ng-click="signout()">Sign-Out</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>

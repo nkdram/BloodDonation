@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html ng-app="ngcTableDirectiveTest">
+<head>
+    <title>Test Template</title>
+    <link href="test.css" rel="stylesheet" type="text/css">
+    <link href="../dist/latest/ng-cells.css" rel="stylesheet" type="text/css">
+
+
+    <script src="../bower_components/angular/angular.min.js"></script>
+    <script src="../bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="../dist/latest/ng-cells.js"></script>
+    <script>
+        angular.module('ngcTableDirectiveTest', ['ngcTableDirective'])
+                .controller('TestCtrl', function($scope) {
+                    $scope.data = [];
+
+                    var n = 40;
+
+                    for (var row = 0; row < n; row++) {
+                        var rowContent = [];
+                        for (var col = 0; col < n; col++) {
+                            rowContent.push(row * col + col);
+                        }
+                        $scope.data.push(rowContent);
+                    }
+
+                    $scope.scrollLeftPosition = 0;
+                    $scope.scrollTopPosition = 0;
+
+                    $scope.customDataFn = function(data, row, col) {
+                        if (col == 39) {
+                            var sum = 0;
+                            var subArray = data[row].slice($scope.scrollLeftPosition + 1, $scope.scrollLeftPosition + 4);
+                            angular.forEach(subArray, function(val) {sum += val;});
+
+                            return sum;
+                        }
+                        return data[row][col];
+                    };
+
+
+                    $scope.resultFormatFn = function(data, row, col) {
+                        return "Sum: "  + data;
+                    };
+                });
+    </script>
+
+</head>
+<body>
+<div ng-controller="TestCtrl">
+    <div>
+        Scroll Position : [{{scrollTopPosition}}, {{scrollLeftPosition}}]
+    </div>
+
+    <div ngc-table data="data"
+         custom-data-value-fn="customDataFn"
+         scroll-top-position="scrollTopPosition"
+         scroll-left-position="scrollLeftPosition"
+         left-column-widths="'40px'"
+         center-column-widths="'40px'"
+         center-column-number="3"
+         right-column-widths="'80px'"
+        >
+        <div ngc-range="" top="0" bottom="40" left="39" right="40" format-fn="resultFormatFn"></div>
+
+    </div>
+</div>
+</body>
+</html>

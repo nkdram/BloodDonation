@@ -1,0 +1,41 @@
+<section ng-controller="DashboardController" ng-init="getCategorizedProducts()">
+    <div class="row">
+        <div class="col-sm-6 col-lg-offset-1">
+            <div class="content-box">
+                <h2> Product Details</h2>
+
+                <span> Highest Percent : {{highest.toFixed(2)}}</span>
+                <span> Lowest Percent : {{lowest.toFixed(2)}}</span>
+
+
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th colspan="1"></th>
+                        <th ng-repeat="x in tableData[0].catArr">
+                            {{ x.store }}
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!--<tr  ng-repeat="x in tableData">
+                        <td>{{x.category}}</td>
+                        <td ng-repeat="y in x.catArr" >
+                            {{ y.price }} ({{y.difference.toFixed(2)}})
+                        </td>
+                    </tr>-->
+
+                    <tr  ng-repeat="x in tableData">
+                        <td>{{x.category}}</td>
+                        <td ng-repeat="y in x.catArr" bgcolor="{{y.style}}">
+                            {{ y.price }}
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        </div>
+</section>
+

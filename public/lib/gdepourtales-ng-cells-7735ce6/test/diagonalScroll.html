@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html ng-app="ngcTableDirectiveTest">
+<head>
+    <title>Diagonal automatic scroll</title>
+    <link href="../dist/latest/ng-cells.css" rel="stylesheet" type="text/css">
+
+    <style type="text/css">
+        .ngc.cell-content {
+            text-align: right;
+        }
+        .ngc.cell {
+            border: 1px dotted darkslategray;
+        }
+    </style>
+
+    <script src="../bower_components/angular/angular.js"></script>
+    <script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="../dist/latest/ng-cells.js"></script>
+
+
+
+    <script>
+        angular.module('ngcTableDirectiveTest', ['ngcTableDirective'])
+                .controller('TestCtrl', function($scope, $timeout) {
+                    $scope.data = [];
+
+                    for (var row = 0; row < 500; row++) {
+                        var rowContent = [];
+                        for (var col = 0; col < 1000; col++) {
+                            rowContent.push(row * col + col);
+                        }
+                        $scope.data.push(rowContent);
+                    }
+
+                    $scope.scrollTopPosition = 0;
+                    $scope.scrollLeftPosition = 0;
+
+                    $scope.$watch('scrollTopPosition', function(newValue) {
+                        $scope.scrollLeftPosition = (newValue) * 2;
+                    });
+
+                    $scope.$watch('scrollLeftPosition', function(newValue) {
+                        $scope.scrollTopPosition = (newValue) / 2;
+                    });
+                });
+
+    </script>
+
+</head>
+<body>
+<div ng-controller="TestCtrl">
+    <div ngc-table data="data"
+         scroll-top-position="scrollTopPosition"
+         scroll-left-position="scrollLeftPosition"
+         scroll-fn="onScroll"
+
+         left-column-number="5" left-column-widths="'40px'"
+         center-column-number="10" center-column-widths="['60px']"
+         right-column-number="5" right-column-widths="['60px']"
+         header-row-number="2" header-row-heights="['30px', '15px']"
+         row-number='15' row-heights="['41px', '14px']"
+         footer-row-number="3" footer-row-heights="'24px'">
+
+            </div>
+</div>
+</body>
+</html>
