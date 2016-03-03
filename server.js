@@ -33,7 +33,10 @@ io.on('connection', function(socket) {
     socket.on('register', function(data) {
         var code = speakeasy.totp({key: 'abc123'});
         console.log('Inside Register');
-        sendSMS(data.phone_number, code, socket);
+        sendSMS(data.phone_number, code, socket,function(){
+
+
+        });
         /*users.get(data.phone_number, function (geterr, doc, key) {
          if (geterr) {
          createUser(data.phone_number, code, socket);
@@ -67,13 +70,19 @@ io.on('connection', function(socket) {
 });
 
 
-function sendSMS(phone_number, code, socket) {
+function sendSMS(phone_number, code, socket,cb) {
     client.sendSms({
         to: phone_number,
         from: twilioNumber,
         body: 'Your verification code is: ' + code
     }, function(twilioerr, responseData) {
-
+        if(twilioerr){
+            socket.emit('registerError', {message: "Error in sending OTP to this number!"});
+        }
+        else
+        {
+            cb()
+        }
     });
 };
 

@@ -18,6 +18,11 @@
                     $scope.verified = true;
                 });
 
+                socket.on("registerError",function(data){
+                    $scope.verified = false;
+                    $scope.error = data.message;
+                });
+
             });
 
             $scope.cancel = function () {

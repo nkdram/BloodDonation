@@ -18,12 +18,31 @@ module.exports = function (sequelize, DataTypes) {
                     notEmpty: true
                 }
             },
-            displayname: DataTypes.STRING,
+            displayname: {type:DataTypes.STRING},
+            bloodgroup: {type:DataTypes.STRING},
             email: {
                 type: DataTypes.STRING,
                 validate: {
                     notEmpty: true,
                     isEmail: true
+                }
+            },
+            phone: {
+                type: DataTypes.STRING,
+                validate: {
+                notEmpty: true
+                }
+            },
+            address: {
+                type: DataTypes.STRING,
+                validate: {
+                    notEmpty: true
+                }
+            },
+            latlng: {
+                type: DataTypes.STRING,
+                validate: {
+                    notEmpty: true
                 }
             },
             updated: {
@@ -39,7 +58,7 @@ module.exports = function (sequelize, DataTypes) {
             },
             active: {
                 type: DataTypes.CHAR,
-                defaultValue: '1'
+                defaultValue: '0'
             },
             link:{
                 type: DataTypes.STRING,
