@@ -15,7 +15,13 @@ exports.registerDonar = function(donarData,callBack){
             { email: donarData.email })
     }).then(function(Donar){
         if(Donar){
-            callBack('Phone number or Email is already registered !',null);
+            //Update existing Token
+            Donar.updateAttributes({
+                token : donarData.token,
+                updated: common.getLocalizeCurrentDateTime()
+            }).success(function (updatedData) {
+                callBack('Phone number or Email is already registered !',null);
+            });
         }
         else {
 

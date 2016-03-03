@@ -1,3 +1,23 @@
+-- Donars Table
+
+CREATE TABLE tbl_donars (
+id SERIAL PRIMARY KEY,
+  firstname varchar(255) DEFAULT NULL,
+  lastname varchar(255) DEFAULT NULL,
+  displayname varchar(500) DEFAULT NULL,
+  email varchar(255) NOT NULL,
+  phone varchar(255) NOT NULL,
+  latlng varchar(255) NOT NULL,
+  address varchar(500) NOT NULL,
+  bloodgroup varchar(20) NOT NULL,
+  token varchar(100) NOT NULL,
+  link varchar(500) NOT NULL,
+  updated timestamp DEFAULT NULL,
+  created timestamp NOT NULL,
+  active boolean NOT NULL
+)
+
+
 -- User Table to Maintain User Information
 
 CREATE TABLE tbl_users (

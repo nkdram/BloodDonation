@@ -12,7 +12,7 @@
             <div>
                 <form role="form" name="signupForm" ng-submit="addLocation()" novalidate autocomplete="off"
                       class="user-loginform signin">
-                    <fieldset>
+                    <fieldset ng-if="!registered">
                         <div class="form-group">
                             <label for="firstName">First Name</label>
                             <input type="text" required id="firstName" name="firstName" class="form-control"
@@ -63,15 +63,22 @@
                             </ui-select>
 
                         </div>
-                        <div class="user-submit">
-                            <button type="submit"
-                                    ng-disabled="signupForm.$invalid"
-                                    class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>
-                                {{ verified ? 'Add Location' : 'Verify Phone' }}
-                            </button>
-                            <button type="button" class="btn btn-warning" ng-click="cancel()"><i class="glyphicon glyphicon-minus"></i> Cancel</button>
+                    </fieldset>
+                    <fieldset ng-if="registered">
+                        <div class="form-group">
+                            <label for="phoneOTP">Please type OTP</label>
+                            <input type="text" id="phoneOTP" name="phoneOTP" class="form-control"
+                                   ng-model="credentials.phoneOTP" placeholder="Please type OTP" ng-required="true">
                         </div>
                     </fieldset>
+                    <div class="user-submit">
+                        <button type="submit"
+                                ng-disabled="signupForm.$invalid"
+                                class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>
+                            {{ registered ? 'Verify Phone' : 'Add Location' }}
+                        </button>
+                        <button type="button" class="btn btn-warning" ng-click="cancel()"><i class="glyphicon glyphicon-minus"></i> Cancel</button>
+                    </div>
                 </form>
             </div>
         </div>

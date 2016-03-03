@@ -5,6 +5,7 @@
         function ($scope, $uibModalInstance, items, $http) {
 
             var socket ;
+            $scope.registered = false;
             require([ 'http://localhost:8079/socket.io/socket.io.js' ],function(socketFile){
                 socket = socketFile.connect();
 
@@ -13,14 +14,38 @@
                         $scope.credentials.addressComponent.geometry.location.lat + ','
                         +$scope.credentials.addressComponent.geometry.location.lng;
                     $scope.credentials.blooggroup  = $scope.credentials.bloodGroup.group;
-                    socket.emit("register", {
-                        phone_number: $scope.credentials.phone,
-                        donarData : $scope.credentials
-                    });
+                    if(!$scope.registered){
+                        socket.emit("register", {
+                            phone_number: $scope.credentials.phone,
+                            donarData : $scope.credentials
+                        });
+                    }
+                    else {
+                        socket.emit("verify", {
+                            code: $scope.credentials.phoneOTP,
+                            donarData : $scope.credentials
+                        });
+                    }
                 };
 
+                socket.on("registered",function(data){
+                    if(data.success) {
+                        $scope.registered = true;
+                    }
+                    else
+                    {
+                        $scope.error = data.message;
+                    }
+                });
+
                 socket.on("verified",function(data){
-                    $scope.verified = true;
+                    if(data.success) {
+                        $scope.verified = true;
+                    }
+                    else
+                    {
+                        $scope.error = data.message;
+                    }
                 });
 
                 socket.on("registerError",function(data){

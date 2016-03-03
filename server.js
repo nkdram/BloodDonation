@@ -37,7 +37,13 @@ io.on('connection', function(socket) {
          var donar = require('./controllers/donars.controller');
             data.donarData.token = code;
             donar.registerDonar(data.donarData,function(err,data){
-                socket.emit('registered', {message: "Registered!"});
+                if(!err) {
+                    socket.emit('registered', {message: "",success:"Registered !!"});
+                }
+                else
+                {
+                    socket.emit('registered', {message: "Error During Registering"});
+                }
             });
         });
     });
@@ -45,7 +51,12 @@ io.on('connection', function(socket) {
     socket.on('verify', function(data) {
         var donar = require('./controllers/donars.controller');
         donar.updateVerification(data.donarData,data.code,function(err,Data){
-            socket.emit('verified', {message: "Verified!"});
+            if(!err) {
+                socket.emit('verified', {message: "",success:"Verified !!"});
+            }
+            else {
+                socket.emit('verified', {message: "Code doesn't Match"});
+            }
         });
     });
 });
