@@ -9,8 +9,13 @@
                 socket = socketFile.connect();
 
                 $scope.verfiyPhone = function(){
+                    $scope.credentials.latlng =
+                        $scope.credentials.addressComponent.geometry.location.lat + ','
+                        +$scope.credentials.addressComponent.geometry.location.lng;
+                    $scope.credentials.blooggroup  = $scope.credentials.bloodGroup.group;
                     socket.emit("register", {
-                        phone_number: $scope.credentials.phone
+                        phone_number: $scope.credentials.phone,
+                        donarData : $scope.credentials
                     });
                 };
 

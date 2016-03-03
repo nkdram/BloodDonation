@@ -34,38 +34,19 @@ io.on('connection', function(socket) {
         var code = speakeasy.totp({key: 'abc123'});
         console.log('Inside Register');
         sendSMS(data.phone_number, code, socket,function(){
-
-
+         var donar = require('./controllers/donars.controller');
+            data.donarData.token = code;
+            donar.registerDonar(data.donarData,function(err,data){
+                socket.emit('registered', {message: "Registered!"});
+            });
         });
-        /*users.get(data.phone_number, function (geterr, doc, key) {
-         if (geterr) {
-         createUser(data.phone_number, code, socket);
-         }
-         else if (checkVerified(socket, doc.verified, data.phone_number) == false) {
-         socket.emit('update', {message: "You have already requested a verification code for that number!"});
-         socket.emit('code_generated');
-         }
-         });*/
-
     });
 
     socket.on('verify', function(data) {
-        var code = Math.floor((Math.random()*999999)+111111);
-        /*users.get(data.phone_number, function (geterr, doc, key) {
-         if (geterr) {
-         socket.emit('reset');
-         socket.emit('update', {message: "You have not requested a verification code for " + data.phone_number + " yet!"});
-         }
-         else if (checkVerified(socket, doc.verified, data.phone_number) == false && doc.code == parseInt(data.code)) {
-         socket.emit('verified');
-         socket.emit('update', {message: "You have successfully verified " + data.phone_number + "!"});
-         users.save(data.phone_number, {code: parseInt(data.code), verified: true}, function (saverr) { if (saverr) { throw saverr; }});
-         }
-         else {
-         socket.emit('update', {message: "Invalid verification code!"});
-         }
-         });*/
-
+        var donar = require('./controllers/donars.controller');
+        donar.updateVerification(data.donarData,data.code,function(err,Data){
+            socket.emit('verified', {message: "Verified!"});
+        });
     });
 });
 

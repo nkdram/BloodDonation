@@ -44,7 +44,7 @@ exports.registerDonar = function(donarData,callBack){
     })
 };
 
-exports.updateVerification = function(donarData,callBack){
+exports.updateVerification = function(donarData,code,callBack){
     db.Donars.findOne({
         where:
             db.sequelize.or(
@@ -55,12 +55,18 @@ exports.updateVerification = function(donarData,callBack){
             callBack('Phone number or Email is not registered yet!', null);
         }
         else{
-            Donar.updateAttributes({
-                active: '1',
-                updated: common.getLocalizeCurrentDateTime()
-            }).success(function(updatedData) {
-                callBack(null, updatedData);
-            });
+            if(Donar.token === code) {
+                Donar.updateAttributes({
+                    active: '1',
+                    updated: common.getLocalizeCurrentDateTime()
+                }).success(function (updatedData) {
+                    callBack(null, updatedData);
+                });
+            }
+            else
+            {
+                callBack('Token Doesn\'t Match !', null);
+            }
         }
     });
 };
