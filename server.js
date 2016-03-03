@@ -36,6 +36,7 @@ io.on('connection', function(socket) {
         sendSMS(data.phone_number, code, socket,function(){
          var donar = require('./controllers/donars.controller');
             data.donarData.token = code;
+            console.log(data.donarData);
             donar.registerDonar(data.donarData,function(err,data){
                 if(!err) {
                     socket.emit('registered', {message: "",success:"Registered !!"});

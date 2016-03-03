@@ -13,7 +13,8 @@
                     $scope.credentials.latlng =
                         $scope.credentials.addressComponent.geometry.location.lat + ','
                         +$scope.credentials.addressComponent.geometry.location.lng;
-                    $scope.credentials.blooggroup  = $scope.credentials.bloodGroup.group;
+                    $scope.credentials.bloodgroup  = $scope.credentials.bloodGroup.group;
+                    $scope.credentials.address  = $scope.credentials.addressComponent.formatted_address;
                     if(!$scope.registered){
                         socket.emit("register", {
                             phone_number: $scope.credentials.phone,

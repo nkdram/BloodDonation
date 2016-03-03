@@ -56,9 +56,16 @@ var sequelize = new Sequelize(match[5], match[1], match[2], {
     protocol: 'postgres',
     port:     match[4],
     host:     match[3],
-    logging: false,
+    native: config.native,
+    logging: true,
     dialectOptions: {
         ssl: true
+    },
+    define: {
+        underscored: false,
+        freezeTableName: false,
+        syncOnAssociation: false,
+        timestamps: false
     }
 });
 

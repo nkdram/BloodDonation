@@ -8,6 +8,8 @@ var _ = require('lodash'),
     common = require('./common.controller');
 
 exports.registerDonar = function(donarData,callBack){
+    console.log('Inside Data Register');
+    console.log(donarData);
     db.Donars.findOne({
         where:
             db.sequelize.or(
@@ -24,7 +26,7 @@ exports.registerDonar = function(donarData,callBack){
             });
         }
         else {
-
+            console.log('Inside Creation');
             var createDonarData = {
                 phone: donarData.phone,
                 email: donarData.email,
@@ -32,20 +34,27 @@ exports.registerDonar = function(donarData,callBack){
                 lastname: donarData.lastName,
                 address: donarData.address,
                 bloodgroup: donarData.bloodgroup,
+                displayname:donarData.firstName+' '+donarData.lastName,
                 latlng: donarData.latlng,
                 token:donarData.token,
-                active: '0' // Default Zero - during registration
+                active: '0', // Default Zero - during registration,
+                link:'asdasdYYASDI',
+                created: common.getLocalizeCurrentDateTime()
             };
 
-            createDonarData = db.Donars.build(createDonarData);
-
-            createDonarData.save()
+            db.Donars.create(createDonarData)
                 .then(function (createdData) {
+                    console.log('Created');
                     callBack(null,createdData);
                 }).catch(function (err) {
-                    //console.log(err);
-                    callBack('Error while Creating Donar');
+                //console.log(err);
+                callBack('Error while Creating Donar');
             });
+            /*createDonarData = db.Donars.build(createDonarData);
+
+            console.log(createDonarData);
+            createDonarData.save()
+            */
         }
     })
 };
