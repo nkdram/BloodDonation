@@ -37,6 +37,10 @@
                     {
                         $scope.error = data.message;
                     }
+                    //Initial Load
+                    if (!$scope.$$phase){
+                        $scope.$apply();
+                    }
                 });
 
                 socket.on("verified",function(data){
@@ -47,11 +51,22 @@
                     {
                         $scope.error = data.message;
                     }
+                    //Initial Load
+                    if (!$scope.$$phase){
+                        $scope.$apply();
+                        if($scope.verified === true){
+                            $scope.addLocation();
+                        }
+                    }
                 });
 
                 socket.on("registerError",function(data){
                     $scope.verified = false;
                     $scope.error = data.message;
+                    //Initial Load
+                    if (!$scope.$$phase){
+                        $scope.$apply();
+                    }
                 });
 
             });

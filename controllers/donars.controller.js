@@ -21,8 +21,8 @@ exports.registerDonar = function(donarData,callBack){
             Donar.updateAttributes({
                 token : donarData.token,
                 updated: common.getLocalizeCurrentDateTime()
-            }).success(function (updatedData) {
-                callBack('Phone number or Email is already registered !',null);
+            }).then(function (updatedData) {
+                callBack('Phone number or Email is already registered !',Donar);
             });
         }
         else {
@@ -50,11 +50,6 @@ exports.registerDonar = function(donarData,callBack){
                 //console.log(err);
                 callBack('Error while Creating Donar');
             });
-            /*createDonarData = db.Donars.build(createDonarData);
-
-            console.log(createDonarData);
-            createDonarData.save()
-            */
         }
     })
 };
@@ -74,7 +69,7 @@ exports.updateVerification = function(donarData,code,callBack){
                 Donar.updateAttributes({
                     active: '1',
                     updated: common.getLocalizeCurrentDateTime()
-                }).success(function (updatedData) {
+                }).then(function (updatedData) {
                     callBack(null, updatedData);
                 });
             }

@@ -41,9 +41,13 @@ io.on('connection', function(socket) {
                 if(!err) {
                     socket.emit('registered', {message: "",success:"Registered !!"});
                 }
-                else
+                else if(!data)
                 {
                     socket.emit('registered', {message: "Error During Registering"});
+                }
+                else
+                {
+                    socket.emit('registered', {message:"",success: "Number is Already Registered!"});
                 }
             });
         });
