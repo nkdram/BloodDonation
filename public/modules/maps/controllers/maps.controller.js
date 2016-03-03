@@ -51,11 +51,11 @@
                                  self.map.add( graphicsLayer);
                                  self.graphicsLayer = graphicsLayer;
 
-                                 var pointSym = new PictureMarkerSymbol('/assets/modules/core/img/defaultMarker.png', 25, 25);
+                                 var pointSym = new PictureMarkerSymbol('/assets/modules/core/img/defaultMarker.png', 40, 40);
                                  self.point = pointSym;
                                  self.sr = new SpatialReference(4326);
 
-                                 var pictureMarkerSymbol = new PictureMarkerSymbol('/assets/modules/core/img/current.png', 25, 25);
+                                 var pictureMarkerSymbol = new PictureMarkerSymbol('/assets/modules/core/img/current.png', 50, 50);
 
                                  self.loadMarker(lat,lng,pictureMarkerSymbol);
 

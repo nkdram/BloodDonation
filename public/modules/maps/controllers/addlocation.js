@@ -4,6 +4,26 @@
     angular.module('esrimaps').controller('AddLocationController', ['$scope', '$uibModalInstance', 'items','$http',
         function ($scope, $uibModalInstance, items, $http) {
 
+            var socket ;
+            require([ 'http://localhost:8079/socket.io/socket.io.js' ],function(socketFile){
+                socket = socketFile.connect();
+
+                $scope.verfiyPhone = function(){
+                    socket.emit("register", {
+                        phone_number: $scope.credentials.phone
+                    });
+                };
+
+                socket.on("verified",function(data){
+                    $scope.verified = true;
+                });
+
+            });
+
+            $scope.cancel = function () {
+                $uibModalInstance.dismiss('cancel');
+            };
+
             $scope.map = items;
             $scope.credentials = {};
             $scope.bloodgroups = [
@@ -36,14 +56,20 @@
                 });
             };
 
+            $scope.verified = false;
             $scope.addLocation = function(){
-                var lineAtt = {
-                    Name: $scope.credentials.firstName + ' '+ $scope.credentials.lastName,  //The name of the pipeline
-                    BloodGroup: $scope.credentials.bloodGroup.group,  //The owner of the pipeline
-                    Phone: $scope.credentials.phone
-                };
-                $scope.map.loadMarker($scope.credentials.addressComponent.geometry.location.lat,$scope.credentials.addressComponent.geometry.location.lng,null,lineAtt);
-                $uibModalInstance.close();
+                if(!$scope.verified) {
+                    $scope.verfiyPhone();
+                }
+                else {
+                    var lineAtt = {
+                        Name: $scope.credentials.firstName + ' ' + $scope.credentials.lastName,  //The name of the pipeline
+                        BloodGroup: $scope.credentials.bloodGroup.group,  //The owner of the pipeline
+                        Phone: $scope.credentials.phone
+                    };
+                    $scope.map.loadMarker($scope.credentials.addressComponent.geometry.location.lat, $scope.credentials.addressComponent.geometry.location.lng, null, lineAtt);
+                    $uibModalInstance.close();
+                }
             };
 
             $scope.loadDefaultLocation = function(){
@@ -59,12 +85,5 @@
                     }
                 });
             };
-
-
-
-            $scope.cancel = function () {
-                $uibModalInstance.dismiss('cancel');
-            };
-
         }]);
 })();
