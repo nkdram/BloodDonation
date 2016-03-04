@@ -45,6 +45,18 @@ module.exports = function (sequelize, DataTypes) {
                     notEmpty: true
                 }
             },
+            lat: {
+                type: DataTypes.DECIMAL,
+                validate: {
+                    notEmpty: true
+                }
+            },
+            lng: {
+                type: DataTypes.DECIMAL,
+                validate: {
+                    notEmpty: true
+                }
+            },
             updated: {
                 type: DataTypes.DATE
             },

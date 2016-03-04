@@ -15,6 +15,9 @@
                         +$scope.credentials.addressComponent.geometry.location.lng;
                     $scope.credentials.bloodgroup  = $scope.credentials.bloodGroup.group;
                     $scope.credentials.address  = $scope.credentials.addressComponent.formatted_address;
+                    //Storing Lat & Lng
+                    $scope.credentials.lat =  $scope.credentials.addressComponent.geometry.location.lat.toFixed(5);
+                    $scope.credentials.lng =  $scope.credentials.addressComponent.geometry.location.lng.toFixed(5);
                     if(!$scope.registered){
                         socket.emit("register", {
                             phone_number: $scope.credentials.phone,
@@ -37,7 +40,7 @@
                     {
                         $scope.error = data.message;
                     }
-                    //Initial Load
+                    //Digest Registration
                     if (!$scope.$$phase){
                         $scope.$apply();
                     }
@@ -51,7 +54,7 @@
                     {
                         $scope.error = data.message;
                     }
-                    //Initial Load
+                    //Digest Verification
                     if (!$scope.$$phase){
                         $scope.$apply();
                         if($scope.verified === true){
@@ -63,7 +66,7 @@
                 socket.on("registerError",function(data){
                     $scope.verified = false;
                     $scope.error = data.message;
-                    //Initial Load
+                    //Digest Error
                     if (!$scope.$$phase){
                         $scope.$apply();
                     }

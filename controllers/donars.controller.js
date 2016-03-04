@@ -9,7 +9,6 @@ var _ = require('lodash'),
 
 exports.registerDonar = function(donarData,callBack){
     console.log('Inside Data Register');
-    console.log(donarData);
     db.Donars.findOne({
         where:
             db.sequelize.or(
@@ -36,9 +35,11 @@ exports.registerDonar = function(donarData,callBack){
                 bloodgroup: donarData.bloodgroup,
                 displayname:donarData.firstName+' '+donarData.lastName,
                 latlng: donarData.latlng,
-                token:donarData.token,
+                lat: donarData.lat,
+                lng: donarData.lng,
+                token: donarData.token,
                 active: '0', // Default Zero - during registration,
-                link:'asdasdYYASDI',
+                link: donarData.link,
                 created: common.getLocalizeCurrentDateTime()
             };
 
@@ -76,6 +77,29 @@ exports.updateVerification = function(donarData,code,callBack){
             else
             {
                 callBack('Token Doesn\'t Match !', null);
+            }
+        }
+    });
+};
+
+exports.updateInfo = function(donarData,link,callBack){
+    db.Donars.findOne({
+        where:
+            db.sequelize.or(
+                { phone: donarData.phone },
+                { email: donarData.email })
+    }).then(function(Donar) {
+        if (!Donar) {
+            callBack('Phone number or Email is not registered yet!', null);
+        }
+        else {
+            if (Donar.link === link) {
+                Donar.updateAttributes(donarData).then(function (updatedData) {
+                    callBack(null, updatedData);
+                });
+            }
+            else {
+                callBack('Unique Link Doesn\'t Match !', null);
             }
         }
     });
