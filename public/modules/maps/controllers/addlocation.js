@@ -1,12 +1,13 @@
 (function () {
     'use strict';
 
-    angular.module('esrimaps').controller('AddLocationController', ['$scope', '$uibModalInstance', 'items','$http',
-        function ($scope, $uibModalInstance, items, $http) {
+    angular.module('esrimaps').controller('AddLocationController', ['$scope', '$uibModalInstance', 'items','$http','$location',
+        function ($scope, $uibModalInstance, items, $http, $location) {
 
             var socket ;
             $scope.registered = false;
-            require([ 'http://localhost:8079/socket.io/socket.io.js' ],function(socketFile){
+            var domainName = $location.protocol() + "://" + $location.host() + ":" + $location.port();
+            require([  domainName+ '/socket.io/socket.io.js' ],function(socketFile){
                 socket = socketFile.connect();
 
                 $scope.verfiyPhone = function(){
