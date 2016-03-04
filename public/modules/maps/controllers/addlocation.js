@@ -23,12 +23,14 @@
                             phone_number: $scope.credentials.phone,
                             donarData : $scope.credentials
                         });
+                        $scope.loading = true;
                     }
                     else {
                         socket.emit("verify", {
                             code: $scope.credentials.phoneOTP,
                             donarData : $scope.credentials
                         });
+                        $scope.loading = true;
                     }
                 };
 
@@ -40,6 +42,7 @@
                     {
                         $scope.error = data.message;
                     }
+                    $scope.loading = false; // Remove Loader once registration DONE
                     //Digest Registration
                     if (!$scope.$$phase){
                         $scope.$apply();
@@ -54,6 +57,7 @@
                     {
                         $scope.error = data.message;
                     }
+                    $scope.loading = false; // Remove Loader once Verification DONE
                     //Digest Verification
                     if (!$scope.$$phase){
                         $scope.$apply();

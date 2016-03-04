@@ -31,16 +31,16 @@ var client = require('twilio')(accountSid, authToken)
 io.on('connection', function(socket) {
     console.log('socket.io connected');
     socket.on('register', function(data) {
+        var secretLink = speakeasy.generateSecret({length: 100});
         var code = speakeasy.totp({
-            secret: secret.base32,
+            secret: secretLink.base32,
             encoding: 'base32'
         });
-        var secretLink = speakeasy.generateSecret({length: 120});
         console.log('Inside Register');
         sendSMS(data.phone_number, code, socket,function(){
          var donar = require('./controllers/donars.controller');
             data.donarData.token = code;
-            data.donarData.link = secretLink;
+            data.donarData.link = secretLink.base32;
             donar.registerDonar(data.donarData,function(err,data){
                 if(!err) {
                     socket.emit('registered', {message: "",success:"Registered !!"});
