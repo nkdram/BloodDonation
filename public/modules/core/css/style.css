@@ -41,6 +41,7 @@
     opacity: .8;
 }
 .loaderBuild {
+    
     position: absolute;
     left: 0;
     top: 0;
@@ -49,4 +50,5 @@
     margin: auto;
     height: 40px;
     width: 40px;
+
 }
