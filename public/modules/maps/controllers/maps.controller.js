@@ -106,42 +106,51 @@
              });
 
             $scope.getCurrentLocation = function(callBack){
+                console.log('Retrieving Position');
                 if(!navigator.geolocation)
                 {
                     callBack('Error  - Broswer Doesn\'t Support HTML5 Geolocation ',null);
                 }
                 else if(navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(function (position) {
-                        console.log('Retrieved position using HTML5 Geolocations');
-                        callBack(null,position.coords);
-                    },function(err){
+
+                    var isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
+
+                    if(!isSafari) {
+                        navigator.geolocation.getCurrentPosition(function (position) {
+                            console.log('Retrieved position using HTML5 Geolocations');
+                            callBack(null, position.coords);
+                        }, function (err) {
+                            $http({
+                                method: 'GET'
+                                , url: '//freegeoip.net/json/'
+                            }).then(function (location) {
+                                console.log('Retrieved position using Geoip');
+                                location = location.data;
+                                var position = {
+                                    coords: {
+                                        latitude: location.latitude, longitude: location.longitude
+                                    }
+                                };
+                                callBack(null, position.coords);
+                            });
+                        });
+                    }
+                    else
+                    {
                         $http({
                             method: 'GET'
-                            ,url:'//freegeoip.net/json/'
-                        }).then(function(location) {
+                            , url: '//freegeoip.net/json/'
+                        }).then(function (location) {
                             console.log('Retrieved position using Geoip');
                             location = location.data;
-                            var position ={ coords : {
-                                latitude: location.latitude ,longitude: location.longitude
-                            } };
-                            callBack(null,position.coords);
+                            var position = {
+                                coords: {
+                                    latitude: location.latitude, longitude: location.longitude
+                                }
+                            };
+                            callBack(null, position.coords);
                         });
-
-                        /*$.ajax( {
-                            url: '//freegeoip.net/json/',
-                            type: 'POST',
-                            dataType: 'jsonp',
-                            success: function(location) {
-
-                                var position ={ coords : {
-                                    latitude: location.latitude ,longitude: location.longitude
-                                } };
-
-                                console.log('Retrieved position using Geoip');
-                                callBack(null,position.coords);
-                            }
-                        } );*/
-                    });
+                    }
                 }
             };
 

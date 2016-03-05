@@ -71,7 +71,7 @@ module.exports =function(){
     app.use(bodyParser.urlencoded({ extended: true }));
 
     // parse multipart/form-data
-    app.use(multer({ dest: './uploads/' }))
+    app.use(multer({ dest: './uploads/' }));
 
     /*app.post('/fileupload', upload.single('product'), function (req, res, next) {
         next();
@@ -115,6 +115,19 @@ module.exports =function(){
         // TODO
     }
 
+
+    /*
+    *  CORS
+     */
+    var allowCrossDomain = function(req, res, next) {
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+        res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+        next();
+    };
+
+    app.use(allowCrossDomain);
 
     /**
      * Routes
