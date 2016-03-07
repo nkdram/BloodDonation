@@ -1,8 +1,8 @@
 (function () {
     'use strict';
 
-    angular.module('esrimaps').controller('MapsController', ['$scope', '$http','esriLoader','$uibModal','$log',
-        function ($scope,$http,esriLoader , $uibModal, $log) {
+    angular.module('esrimaps').controller('MapsController', ['$scope', '$http','esriLoader','$uibModal','$log','$location',
+        function ($scope,$http,esriLoader , $uibModal, $log,$location) {
              var self = this;
              esriLoader.require([
                  'esri/Map',
@@ -17,13 +17,18 @@
                      'esri/symbols/SimpleFillSymbol',
                      'esri/geometry/geometryEngineAsync',
                      "esri/PopupTemplate",
-                     "esri/symbols/PictureMarkerSymbol"
+                     "esri/symbols/PictureMarkerSymbol",
+                     "esri/config"
              ],
                  function( Map, GraphicsLayer, Graphic,
                            SpatialReference, geometryEngine, Point,
                            SimpleMarkerSymbol, SimpleLineSymbol, SimpleFillSymbol,
-                           geometryEngineAsync, PopupTemplate,PictureMarkerSymbol) {
-
+                           geometryEngineAsync, PopupTemplate,PictureMarkerSymbol,esriConfig) {
+                     var domainName = $location.protocol() + "://" + $location.host() + ":" + $location.port();
+                     esriConfig.request.proxyUrl = "/resource-proxy/Java/proxy.jsp";
+                     //esriConfig.required.forceProxy = true;
+                    // esriConfig.portalUrl = domainName + ".esri.com/arcgis";
+                     esriConfig.request.alwaysUseProxy = true;
                  $scope.getCurrentLocation(function(err,position){
 
                      if(!err) {

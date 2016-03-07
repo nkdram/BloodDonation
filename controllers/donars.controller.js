@@ -5,7 +5,8 @@
  */
 var _ = require('lodash'),
     db = require('../config/sequelize'),
-    common = require('./common.controller');
+    common = require('./common.controller'),
+    request = require('request');
 
 exports.registerDonar = function(donarData,callBack){
     console.log('Inside Data Register');
@@ -103,4 +104,10 @@ exports.updateInfo = function(donarData,link,callBack){
             }
         }
     });
+};
+
+exports.proxy = function(req,res){
+    console.log(req.originalUrl);
+    var newurl = req.originalUrl.split("?")[1];
+    request(newurl).pipe(res);
 };

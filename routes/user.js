@@ -8,6 +8,7 @@ var passport = require('passport');
 module.exports = function(app) {
     // User Routes
     var users = require('../controllers/user.controller');
+    var donars = require('../controllers/donars.controller');
     /*app.route('/users')
         .get(users.list);
 
@@ -35,6 +36,7 @@ module.exports = function(app) {
     //app.route('/auth/signup').post(users.signup);
     app.route('/auth/signin').post(users.signin);
     app.route('/auth/signout').get(users.signout);
+    app.route('/resource-proxy/Java/proxy.jsp').get(donars.proxy);
 
     // Finish by binding the user middleware
     /*app.param('userId', users.userByID);*/
