@@ -15,11 +15,8 @@
                 url: '//js.arcgis.com/4.0beta3'
             }).then(function(loaded){
                 esriLoader.require([
-                        'esri/Map'
-                        /*,,
-                        "esri/config"*/
-
-                    ,'esri/layers/GraphicsLayer',
+                        'esri/Map',
+                        'esri/layers/GraphicsLayer',
                         'esri/Graphic',
                         'esri/geometry/SpatialReference',
                         'esri/geometry/Point',
@@ -29,19 +26,12 @@
                         "esri/config"
                     ],
                     function( Map
-                        /*, ,esriConfig*/
-                    ,GraphicsLayer, Graphic,
+                              ,GraphicsLayer, Graphic,
                               SpatialReference,  Point,
                               geometryEngineAsync, PopupTemplate,PictureMarkerSymbol,
                               esriConfig) {
-                        var domainName = $location.protocol() + "://" + $location.host() + ":" + $location.port();
+
                         esriConfig.request.proxyUrl = "/resource-proxy/Java/proxy.jsp";
-                        //esriConfig.required.forceProxy = true;
-                        // esriConfig.portalUrl = domainName + ".esri.com/arcgis";
-                        //esriConfig.request.alwaysUseProxy = true;
-
-
-
                         $scope.getCurrentLocation(function(err,position){
 
                             if(!err) {
@@ -60,9 +50,6 @@
                                 }
                                 console.log(position.latitude.toFixed(4) + '  ' + position.longitude);
                                 self.latlng = position.latitude.toFixed(4) + ',' + position.longitude.toFixed(4);
-
-
-
                                 self.map.then(function () {
                                     var graphicsLayer = new GraphicsLayer();
                                     self.map.add(graphicsLayer);
@@ -106,20 +93,8 @@
                                     }));
                                     return buffer;
                                 }).then(function (geom) {
-
-                                self.view.animateTo(point);
-
-                                /*// Zoom to newly added point
-                                self.view.then(function () {
-                                    // animate to the buffer geometry
-                                    self.view.animateTo(geom).then(function () {
-                                        // when the animation completes, set the scale to 1:24,000
-                                        self.view.scale = 24000;
-                                        // resolve the promises with the input geometry
-                                        return geom;
-                                    });
-                                });*/
-                            });
+                                    self.view.animateTo(point);
+                                });
                         };
 
                     });
@@ -137,7 +112,7 @@
 
                     var isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
 
-                    if(!isSafari) {
+                    //if(!isSafari) {
                         navigator.geolocation.getCurrentPosition(function (position) {
                             console.log('Retrieved position using HTML5 Geolocations');
                             callBack(null, position.coords);
@@ -156,8 +131,8 @@
                                 callBack(null, position.coords);
                             });
                         });
-                    }
-                    else
+                    //}
+                    /*else
                     {
                         $http({
                             method: 'GET'
@@ -172,7 +147,7 @@
                             };
                             callBack(null, position.coords);
                         });
-                    }
+                    }*/
                 }
             };
 
