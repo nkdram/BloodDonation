@@ -1,13 +1,12 @@
 
 <div ng-controller="MapsController as vm">
 
-
-
-    <esri-scene-view map="vm.map" view-options="{ zoom: 15}"
-                     on-create="vm.onViewCreated">
+    <esri-map-view map="vm.map" on-create="vm.onViewCreated"
+                   view-options="{
+        zoom: 15
+    }">
         <div id="results">
             <button type="button" class="btn btn-danger" ng-click="open()">Donate</button>
         </div>
-    </esri-scene-view>
-
+    </esri-map-view>
 </div>

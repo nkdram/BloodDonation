@@ -5,114 +5,122 @@
         function ($scope,$http,esriLoader , $uibModal, $log,$location) {
              var self = this;
 
+            this.onViewCreated = function (view) {
+                console.log('MAP VIEW CREATED');
+                self.view = view;
+
+            };
+
             esriLoader.bootstrap({
                 url: '//js.arcgis.com/4.0beta3'
             }).then(function(loaded){
                 esriLoader.require([
-                        'esri/Map',
-                        'esri/layers/GraphicsLayer',
+                        'esri/Map'
+                        /*,,
+                        "esri/config"*/
+
+                    ,'esri/layers/GraphicsLayer',
                         'esri/Graphic',
                         'esri/geometry/SpatialReference',
-                        'esri/geometry/geometryEngine',
                         'esri/geometry/Point',
-
-                        'esri/symbols/SimpleMarkerSymbol',
-                        'esri/symbols/SimpleLineSymbol',
-                        'esri/symbols/SimpleFillSymbol',
                         'esri/geometry/geometryEngineAsync',
                         "esri/PopupTemplate",
                         "esri/symbols/PictureMarkerSymbol",
                         "esri/config"
                     ],
-                    function( Map, GraphicsLayer, Graphic,
-                              SpatialReference, geometryEngine, Point,
-                              SimpleMarkerSymbol, SimpleLineSymbol, SimpleFillSymbol,
-                              geometryEngineAsync, PopupTemplate,PictureMarkerSymbol,esriConfig) {
+                    function( Map
+                        /*, ,esriConfig*/
+                    ,GraphicsLayer, Graphic,
+                              SpatialReference,  Point,
+                              geometryEngineAsync, PopupTemplate,PictureMarkerSymbol,
+                              esriConfig) {
                         var domainName = $location.protocol() + "://" + $location.host() + ":" + $location.port();
-                        //esriConfig.request.proxyUrl = "/resource-proxy/Java/proxy.jsp";
+                        esriConfig.request.proxyUrl = "/resource-proxy/Java/proxy.jsp";
                         //esriConfig.required.forceProxy = true;
                         // esriConfig.portalUrl = domainName + ".esri.com/arcgis";
                         //esriConfig.request.alwaysUseProxy = true;
 
+
+
                         $scope.getCurrentLocation(function(err,position){
 
                             if(!err) {
-                                console.log(position);
                                 var lat = position ? position.latitude : 80.20000069999999;
                                 var lng = position ? position.longitude : 13.014060599999999;
 
-                                console.log(position.latitude.toFixed(4) + '  ' + position.longitude);
-                                self.latlng = position.latitude.toFixed(4) + ',' + position.longitude.toFixed(4);
                                 self.map = new Map({
                                     basemap: 'streets',
-                                    zoom: 15
+                                    zoom: 15,
+                                    center: [lat,lng]
                                 });
 
-                                //Initial Load
-                                if (!$scope.$$phase) {
+                                if (!$scope.$$phase)
+                                {
                                     $scope.$apply();
                                 }
-                                self.onViewCreated = function (view) {
-                                    self.view = view;
-                                };
-                                var graphicsLayer = new GraphicsLayer();
+                                console.log(position.latitude.toFixed(4) + '  ' + position.longitude);
+                                self.latlng = position.latitude.toFixed(4) + ',' + position.longitude.toFixed(4);
+
+
+
                                 self.map.then(function () {
+                                    var graphicsLayer = new GraphicsLayer();
                                     self.map.add(graphicsLayer);
                                     self.graphicsLayer = graphicsLayer;
 
                                     var pointSym = new PictureMarkerSymbol('/assets/modules/core/img/defaultMarker.png', 40, 40);
                                     self.point = pointSym;
                                     self.sr = new SpatialReference(4326);
-
                                     var pictureMarkerSymbol = new PictureMarkerSymbol('/assets/modules/core/img/current.png', 50, 50);
 
                                     self.loadMarker(lat, lng, pictureMarkerSymbol);
-
                                 });
-
-                                self.loadMarker = function (lat, long, symbol, attribute) {
-
-
-                                    var point = new Point({
-                                        x: long,
-                                        y: lat,
-                                        spatialReference: self.sr
-                                    });
-
-                                    var lineAtt = attribute ? attribute : {
-                                        Name: "Your Current Location"
-                                    };
-
-
-                                    geometryEngineAsync.geodesicBuffer(point, 50, 'yards')
-                                        .then(function (buffer) {
-
-                                            self.graphicsLayer.add(new Graphic({
-                                                geometry: point,
-                                                symbol: symbol ? symbol : self.point,
-                                                attributes: lineAtt,
-                                                popupTemplate: new PopupTemplate({
-                                                    title: "{Name}",  //The title of the popup will be the name of the pipeline
-                                                    content: "{*}"  //Displays a table of all the attributes in the popup
-                                                })
-                                            }));
-                                            return buffer;
-                                        }).then(function (geom) {
-
-                                        // Zoom to newly added point
-                                        return self.view.then(function () {
-                                            // animate to the buffer geometry
-                                            return self.view.animateTo(geom).then(function () {
-                                                // when the animation completes, set the scale to 1:24,000
-                                                self.view.scale = 24000;
-                                                // resolve the promises with the input geometry
-                                                return geom;
-                                            });
-                                        });
-                                    });
-                                };
                             }
                         });
+
+                        self.loadMarker = function (lat, long, symbol, attribute) {
+
+
+                            var point = new Point({
+                                x: long,
+                                y: lat,
+                                spatialReference: self.sr
+                            });
+
+                            var lineAtt = attribute ? attribute : {
+                                Name: "Your Current Location"
+                            };
+
+
+                            geometryEngineAsync.geodesicBuffer(point, 50, 'yards')
+                                .then(function (buffer) {
+
+                                    self.graphicsLayer.add(new Graphic({
+                                        geometry: point,
+                                        symbol: symbol ? symbol : self.point,
+                                        attributes: lineAtt,
+                                        popupTemplate: new PopupTemplate({
+                                            title: "{Name}",  //The title of the popup will be the name of the pipeline
+                                            content: "{*}"  //Displays a table of all the attributes in the popup
+                                        })
+                                    }));
+                                    return buffer;
+                                }).then(function (geom) {
+
+                                self.view.animateTo(point);
+
+                                /*// Zoom to newly added point
+                                self.view.then(function () {
+                                    // animate to the buffer geometry
+                                    self.view.animateTo(geom).then(function () {
+                                        // when the animation completes, set the scale to 1:24,000
+                                        self.view.scale = 24000;
+                                        // resolve the promises with the input geometry
+                                        return geom;
+                                    });
+                                });*/
+                            });
+                        };
 
                     });
             });
