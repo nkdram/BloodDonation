@@ -30,6 +30,18 @@
 }
 
 
+#search {
+    top: 6%;
+    right: 120px;
+    position: absolute;
+    z-index: 99;
+    background-color: white;
+    border-radius: 7px;
+    padding: 3px;
+    opacity: 0.75;
+    font-size: 0.9em;
+}
+
 .spinner {
     position: fixed;
     top:0;

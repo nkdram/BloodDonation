@@ -11,6 +11,24 @@
 
             };
 
+            $scope.$watch('addressComponent', function(newVal,oldVal) {
+                if(newVal!=oldVal){
+                    var graphics =  self.graphicsLayer.graphics._items;
+                    for (var i = 0; i < graphics.length; i++) {
+                        if(graphics[i].symbol.source.url == self.currentPT.source.url )
+                        {
+                            var rtn =  self.graphicsLayer.remove(graphics[i]);
+                            if (!$scope.$$phase)
+                            {
+                                $scope.$apply();
+                            }
+                            console.log(rtn);
+                            self.loadMarker(newVal.geometry.location.lat, newVal.geometry.location.lng, self.currentPT);
+                        }
+                    }
+                }
+            });
+
             esriLoader.bootstrap({
                 url: '//js.arcgis.com/4.0beta3'
             }).then(function(loaded){
@@ -52,7 +70,7 @@
                                 console.log(position.latitude.toFixed(4) + '  ' + position.longitude);
                                 self.latlng = position.latitude.toFixed(4) + ',' + position.longitude.toFixed(4);
                                 self.map.then(function () {
-                                    var graphicsLayer = new GraphicsLayer();
+                                    var graphicsLayer = new GraphicsLayer({id:'markerLayer'});
                                     self.map.add(graphicsLayer);
                                     self.graphicsLayer = graphicsLayer;
 
@@ -60,7 +78,7 @@
                                     self.point = pointSym;
                                     self.sr = new SpatialReference(4326);
                                     var pictureMarkerSymbol = new PictureMarkerSymbol('/assets/modules/core/img/current.png', 50, 50);
-
+                                    self.currentPT = pictureMarkerSymbol;
                                     self.loadMarker(lat, lng, pictureMarkerSymbol);
                                 });
                             }
@@ -79,6 +97,7 @@
                             geometryEngineAsync.geodesicBuffer(point, 50, 'yards')
                                 .then(function (buffer) {
 
+                                    var id = Math.floor((Math.random() * 99999) + 1);
                                     self.graphicsLayer.add(new Graphic({
                                         geometry: point,
                                         symbol: symbol ? symbol : self.point,
@@ -87,6 +106,7 @@
                                             title: "{Name}",  //The title of the popup will be the name of the pipeline
                                             content: "{*}"  //Displays a table of all the attributes in the popup
                                         })
+                                        ,id:id
                                     }));
                                     return buffer;
                                 }).then(function (geom) {
@@ -118,9 +138,10 @@
 
                     var html5Options = { enableHighAccuracy: true, timeout: 6000, maximumAge: 0 };
                     geolocator.locate(function(location){
-                        console.log(location.coords);
-                        location.coords.latitude = parseFloat(location.coords.latitude);
-                        location.coords.longitude = parseFloat(location.coords.longitude);
+                        if(!!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/)) {
+                            location.coords.latitude = parseFloat(location.coords.latitude);
+                            location.coords.longitude = parseFloat(location.coords.longitude);
+                        }
                         callBack(null, location.coords);
                     }, onGeoError, 2, html5Options, '');
                 }
@@ -157,6 +178,25 @@
                 $scope.animationsEnabled = !$scope.animationsEnabled;
             };
 
+
+            $scope.addresses = [];
+            $scope.refreshAddresses = function(address) {
+                var params = {address: address, sensor: false};
+                return $http.get(
+                    'http://maps.googleapis.com/maps/api/geocode/json',
+                    {params: params}
+                ).then(function(response) {
+                    $scope.addresses = response.data.results;
+                    if($scope.addresses && $scope.addresses.length === 1)
+                    {
+                        $scope.addressComponent = $scope.addresses[0];
+                    }
+                    if($scope.addressComponent)
+                    {
+                        $scope.mainLocation = $scope.addressComponent.geometry.location;
+                    }
+                });
+            };
 
 
         }]);
