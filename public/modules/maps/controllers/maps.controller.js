@@ -8,6 +8,24 @@
             this.onViewCreated = function (view) {
                 console.log('MAP VIEW CREATED');
                 self.view = view;
+                self.view.watch('extent', function(newValue) {
+                    console.log("new extent: ", newValue);
+                    $scope.convertVal(newValue.extent.xmin,newValue.extent.ymin,function(lat,lng)
+                    {
+                        $scope.convertVal(newValue.extent.xmax,newValue.extent.ymax,function(latM,lngM)
+                        {
+
+                            var extent = {
+                                 xmin: lat,
+                                 xmax: latM,
+                                 ymax: lngM,
+                                 ymin: lng
+                            };
+                            console.log("new extent: ", extent);
+                        });
+                    });
+
+                });
 
             };
 
@@ -22,7 +40,6 @@
                             {
                                 $scope.$apply();
                             }
-                            console.log(rtn);
                             self.loadMarker(newVal.geometry.location.lat, newVal.geometry.location.lng, self.currentPT);
                         }
                     }
@@ -41,13 +58,20 @@
                         'esri/geometry/geometryEngineAsync',
                         "esri/PopupTemplate",
                         "esri/symbols/PictureMarkerSymbol",
-                        "esri/config"
+                        "esri/config",
+                        "esri/geometry/support/webMercatorUtils"
                     ],
                     function( Map
                               ,GraphicsLayer, Graphic,
                               SpatialReference,  Point,
                               geometryEngineAsync, PopupTemplate,PictureMarkerSymbol,
-                              esriConfig) {
+                              esriConfig,
+                              webMercatorUtils) {
+
+                        $scope.convertVal = function(x,y,callBack){
+                            var numbers = webMercatorUtils.xyToLngLat(x, y);
+                            callBack(numbers[0],numbers[1]);
+                        };
 
                         esriConfig.request.proxyUrl = "/resource-proxy/Java/proxy.jsp";
                         $scope.getCurrentLocation(function(err,position){
