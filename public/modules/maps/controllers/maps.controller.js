@@ -68,7 +68,7 @@
                                 }
 
                                 console.log(position.latitude.toFixed(4) + '  ' + position.longitude);
-                                self.latlng = position.latitude.toFixed(4) + ',' + position.longitude.toFixed(4);
+
                                 self.map.then(function () {
                                     var graphicsLayer = new GraphicsLayer({id:'markerLayer'});
                                     self.map.add(graphicsLayer);
@@ -85,6 +85,9 @@
                         });
 
                         self.loadMarker = function (lat, long, symbol, attribute) {
+
+                            self.latlng = lat + ',' + long;
+
                             var point = new Point({
                                 x: long,
                                 y: lat,
