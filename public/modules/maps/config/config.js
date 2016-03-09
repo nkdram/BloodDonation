@@ -10,8 +10,8 @@
                 url: '/find',
                 templateUrl: '/assets/modules/maps/views/find.html'
             }).
-            state('default', {
-                url: '/',
+            state('defaulState', {
+                url: '',
                 templateUrl: '/assets/modules/maps/views/find.html'
             })
 
