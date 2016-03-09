@@ -37,7 +37,8 @@ module.exports = {
                 'public/lib/ng-table/dist/ng-table.js',
                 //'https://js.arcgis.com/4.0beta3/',
                 'public/lib/angular-esri-map/dist/angular-esri-map.js',
-                'public/lib/angular-ui-select/dist/select.min.js'
+                'public/lib/angular-ui-select/dist/select.min.js',
+                'public/lib/geolocator/src/geolocator.min.js'
             ]
         },
         css: [
@@ -82,7 +83,8 @@ module.exports = {
                 'public/lib/ng-table/dist/ng-table.min.js',
                 //'https://js.arcgis.com/4.0beta3/',
                 'public/lib/angular-esri-map/dist/angular-esri-map.js',
-                'public/lib/angular-ui-select/dist/select.min.js'
+                'public/lib/angular-ui-select/dist/select.min.js',
+                'public/lib/geolocator/src/geolocator.min.js'
             ]
         },
         css: [

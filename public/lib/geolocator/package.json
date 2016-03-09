@@ -1,0 +1,90 @@
+{
+  "_args": [
+    [
+      "geolocator",
+      "D:\\Node Apps\\Task\\BloodDonation"
+    ]
+  ],
+  "_from": "geolocator@latest",
+  "_id": "geolocator@1.2.9",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/geolocator",
+  "_nodeVersion": "0.10.22",
+  "_npmUser": {
+    "email": "onur@cutepilot.com",
+    "name": "onury"
+  },
+  "_npmVersion": "2.5.0",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "geolocator",
+    "raw": "geolocator",
+    "rawSpec": "",
+    "scope": null,
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/geolocator/-/geolocator-1.2.9.tgz",
+  "_shasum": "d1ace36b5c0c31297ec57b8c54b98a89d91f015e",
+  "_shrinkwrap": null,
+  "_spec": "geolocator",
+  "_where": "D:\\Node Apps\\Task\\BloodDonation",
+  "author": {
+    "name": "Onur Yıldırım"
+  },
+  "bugs": {
+    "url": "https://github.com/onury/geolocator/issues"
+  },
+  "dependencies": {},
+  "description": "A javascript library for retrieving geolocation information via HTML5 and IP look-ups...",
+  "devDependencies": {},
+  "directories": {
+    "example": "example"
+  },
+  "dist": {
+    "shasum": "d1ace36b5c0c31297ec57b8c54b98a89d91f015e",
+    "tarball": "http://registry.npmjs.org/geolocator/-/geolocator-1.2.9.tgz"
+  },
+  "files": [
+    "LICENSE",
+    "example",
+    "src"
+  ],
+  "gitHead": "d5f4b8491b9c62a673c6186ed7cad50c181da92c",
+  "homepage": "https://github.com/onury/geolocator",
+  "keywords": [
+    "HTML5",
+    "address",
+    "geocode",
+    "geolocation",
+    "google",
+    "ip",
+    "latitude",
+    "location",
+    "longitude",
+    "lookup",
+    "map"
+  ],
+  "license": "MIT",
+  "maintainers": [
+    {
+      "name": "onury",
+      "email": "onur@cutepilot.com"
+    }
+  ],
+  "name": "geolocator",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/onury/geolocator.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.2.9"
+}

@@ -48,6 +48,7 @@
                                 {
                                     $scope.$apply();
                                 }
+
                                 console.log(position.latitude.toFixed(4) + '  ' + position.longitude);
                                 self.latlng = position.latitude.toFixed(4) + ',' + position.longitude.toFixed(4);
                                 self.map.then(function () {
@@ -66,8 +67,6 @@
                         });
 
                         self.loadMarker = function (lat, long, symbol, attribute) {
-
-
                             var point = new Point({
                                 x: long,
                                 y: lat,
@@ -77,8 +76,6 @@
                             var lineAtt = attribute ? attribute : {
                                 Name: "Your Current Location"
                             };
-
-
                             geometryEngineAsync.geodesicBuffer(point, 50, 'yards')
                                 .then(function (buffer) {
 
@@ -100,7 +97,16 @@
                     });
             });
 
-
+            //The callback function executed when the location is fetched successfully.
+            function onGeoSuccess(location) {
+                console.log('SUCCESS');
+                console.log(location);
+            }
+            //The callback function executed when the location could not be fetched.
+            function onGeoError(error) {
+                console.log('FAILURE');
+                console.log(error);
+            }
 
             $scope.getCurrentLocation = function(callBack){
                 console.log('Retrieving Position');
@@ -110,48 +116,15 @@
                 }
                 else if(navigator.geolocation) {
 
-                    var isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
-
-                    //if(!isSafari) {
-                        navigator.geolocation.getCurrentPosition(function (position) {
-                            console.log('Retrieved position using HTML5 Geolocations');
-                            callBack(null, position.coords);
-                        }, function (err) {
-                            $http({
-                                method: 'GET'
-                                , url: '//freegeoip.net/json/'
-                            }).then(function (location) {
-                                console.log('Retrieved position using Geoip');
-                                location = location.data;
-                                var position = {
-                                    coords: {
-                                        latitude: location.latitude, longitude: location.longitude
-                                    }
-                                };
-                                callBack(null, position.coords);
-                            });
-                        });
-                    //}
-                    /*else
-                    {
-                        $http({
-                            method: 'GET'
-                            , url: '//freegeoip.net/json/'
-                        }).then(function (location) {
-                            console.log('Retrieved position using Geoip');
-                            location = location.data;
-                            var position = {
-                                coords: {
-                                    latitude: location.latitude, longitude: location.longitude
-                                }
-                            };
-                            callBack(null, position.coords);
-                        });
-                    }*/
+                    var html5Options = { enableHighAccuracy: true, timeout: 6000, maximumAge: 0 };
+                    geolocator.locate(function(location){
+                        console.log(location.coords);
+                        location.coords.latitude = parseFloat(location.coords.latitude);
+                        location.coords.longitude = parseFloat(location.coords.longitude);
+                        callBack(null, location.coords);
+                    }, onGeoError, 2, html5Options, '');
                 }
             };
-
-
 
             /*
              * Modal Section
