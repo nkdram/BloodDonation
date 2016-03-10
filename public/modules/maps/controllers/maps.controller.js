@@ -5,28 +5,70 @@
         function ($scope,$http,esriLoader , $uibModal, $log,$location) {
              var self = this;
 
+            var socket;
+            var domainName = $location.protocol() + "://" + $location.host() + ":" + $location.port();
+
+
+            var maxExtent = null;
             this.onViewCreated = function (view) {
                 console.log('MAP VIEW CREATED');
                 self.view = view;
                 self.view.watch('extent', function(newValue) {
-                    console.log("new extent: ", newValue);
-                    $scope.convertVal(newValue.extent.xmin,newValue.extent.ymin,function(lat,lng)
-                    {
-                        $scope.convertVal(newValue.extent.xmax,newValue.extent.ymax,function(latM,lngM)
+                    // :-)  When Map becomes stationary -- Load markers !!
+                    if(self.view.stationary) {
+                        console.log("new extent: ", newValue);
+                        $scope.convertVal(newValue.extent.xmin,newValue.extent.ymin,function(lat,lng)
                         {
+                            $scope.convertVal(newValue.extent.xmax,newValue.extent.ymax,function(latM,lngM)
+                            {
 
-                            var extent = {
-                                 xmin: lat,
-                                 xmax: latM,
-                                 ymax: lngM,
-                                 ymin: lng
-                            };
-                            console.log("new extent: ", extent);
+                                var extent = {
+                                    xmin: lat,
+                                    xmax: latM,
+                                    ymax: lngM,
+                                    ymin: lng
+                                };
+
+                                if(maxExtent === null
+                                || ((extent.xmin < maxExtent.xmin || extent.ymin < maxExtent.ymin) &&
+                                    (extent.xmax > maxExtent.xmax || extent.ymax > maxExtent.ymax))) {
+                                    maxExtent = extent;
+                                    $scope.lazyLoadMarkers(extent);
+                                }
+                            });
                         });
-                    });
-
+                    }
                 });
 
+                self.map.on("update-end", function (e) {
+                    console.log('Update End ');
+                });
+
+                self.view.watch( "update", function(){
+                    console.log('Update End ');
+                });
+
+            };
+
+
+            $scope.lazyLoadMarkers = function (extent) {
+                socket.emit("loadMarkers", extent);
+
+                socket.on("loadedMarkers", function(data){
+                    console.log('INSIDE LOADED MARKERS');
+                    if(data.markers)
+                    {
+                        data.markers.forEach(function(marker){
+                            var lineAtt = {
+                                Name: marker.firstName + ' ' + marker.lastName,  //The name of the pipeline
+                                BloodGroup: marker.group,  //The owner of the pipeline
+                                Phone: marker.phone
+                            };
+                            self.loadMarker(marker.lat,
+                                marker.lng, null, lineAtt,false);
+                        })
+                    }
+                });
             };
 
             $scope.$watch('addressComponent', function(newVal,oldVal) {
@@ -49,6 +91,11 @@
             esriLoader.bootstrap({
                 url: '//js.arcgis.com/4.0beta3'
             }).then(function(loaded){
+
+                require([  domainName+ '/socket.io/socket.io.js' ],function(socketFile) {
+                    socket = socketFile.connect();
+                });
+
                 esriLoader.require([
                         'esri/Map',
                         'esri/layers/GraphicsLayer',
@@ -108,7 +155,7 @@
                             }
                         });
 
-                        self.loadMarker = function (lat, long, symbol, attribute) {
+                        self.loadMarker = function (lat, long, symbol, attribute,animate) {
 
                             self.latlng = lat + ',' + long;
 
@@ -137,7 +184,10 @@
                                     }));
                                     return buffer;
                                 }).then(function (geom) {
-                                    self.view.animateTo(point);
+                                      if(animate === undefined)
+                                     {
+                                         self.view.animateTo(point);
+                                     }
                                 });
                         };
 

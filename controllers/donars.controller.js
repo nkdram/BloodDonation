@@ -83,6 +83,32 @@ exports.updateVerification = function(donarData,code,callBack){
     });
 };
 
+exports.loadMarkers = function(extent,callBack){
+    console.log('Inside Load Markers');
+    db.Donars.findAll({
+        where:
+        {
+            lat:{ $between : [extent.ymin,extent.ymax] },
+            lng:{ $between : [extent.xmin,extent.xmax] }
+        }
+    }).then(function(Donar){
+        var returnData = [];
+        if(Donar){
+           Donar.forEach(function(item){
+               returnData.push({
+                   firstName:item.firstname,
+                   lastName:item.lastname,
+                   lat:item.lat,
+                   lng:item.lng,
+                   phone:item.phone,
+                   group:item.bloodgroup
+               });
+           });
+        }
+        callBack(null,returnData);
+    })
+};
+
 exports.updateInfo = function(donarData,link,callBack){
     db.Donars.findOne({
         where:

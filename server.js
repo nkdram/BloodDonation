@@ -68,6 +68,13 @@ io.on('connection', function(socket) {
             }
         });
     });
+
+    socket.on('loadMarkers',function(data){
+        var donar = require('./controllers/donars.controller');
+        donar.loadMarkers(data,function(err,data){
+            socket.emit('loadedMarkers',{ markers: data });
+        });
+    });
 });
 
 
