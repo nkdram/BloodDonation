@@ -166,7 +166,7 @@
                             });
 
                             var lineAtt = attribute ? attribute : {
-                                Name: "Your Current Location"
+                                Marks : "Your Current Location"
                             };
                             geometryEngineAsync.geodesicBuffer(point, 50, 'yards')
                                 .then(function (buffer) {

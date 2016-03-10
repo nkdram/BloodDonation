@@ -71,6 +71,7 @@
                 socket.on("registerError",function(data){
                     $scope.verified = false;
                     $scope.error = data.message;
+                    $scope.loading = false;
                     //Digest Error
                     if (!$scope.$$phase){
                         $scope.$apply();

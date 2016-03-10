@@ -64,3 +64,24 @@
     width: 40px;
 
 }
+
+.esri-popup .esri-background {
+    background-color: #55BFA4 !important;
+    opacity: 0.9;
+}
+
+.esri-popup .esri-show-title .esri-title {
+    display: block;
+    font-family: serif;
+    color: blanchedalmond;
+}
+
+.esri-popup-renderer-description tr {
+    color: crimson;
+    background-color: white !important;
+}
+
+.esri-popup .esri-container{
+    border: 1px solid blanchedalmond;
+}
+
