@@ -15,39 +15,39 @@
                 self.view = view;
                 self.view.watch('extent', function(newValue) {
                     // :-)  When Map becomes stationary -- Load markers !!
-                    if(self.view.stationary) {
-                        console.log("new extent: ", newValue);
-                        $scope.convertVal(newValue.extent.xmin,newValue.extent.ymin,function(lat,lng)
+                    loadIfExtentChanges(newValue);
+                });
+
+                self.view.watch('interacting', function(newValue) {
+                    loadIfExtentChanges(self.view.extent);
+                });
+
+            };
+
+            var loadIfExtentChanges = function(extent)
+            {
+                if(self.view.stationary) {
+                    $scope.convertVal(extent.xmin,extent.ymin,function(lat,lng)
+                    {
+                        $scope.convertVal(extent.xmax,extent.ymax,function(latM,lngM)
                         {
-                            $scope.convertVal(newValue.extent.xmax,newValue.extent.ymax,function(latM,lngM)
-                            {
 
-                                var extent = {
-                                    xmin: lat,
-                                    xmax: latM,
-                                    ymax: lngM,
-                                    ymin: lng
-                                };
+                            var extent = {
+                                xmin: lat,
+                                xmax: latM,
+                                ymax: lngM,
+                                ymin: lng
+                            };
 
-                                if(maxExtent === null
+                            if(maxExtent === null
                                 || ((extent.xmin < maxExtent.xmin || extent.ymin < maxExtent.ymin) &&
-                                    (extent.xmax > maxExtent.xmax || extent.ymax > maxExtent.ymax))) {
-                                    maxExtent = extent;
-                                    $scope.lazyLoadMarkers(extent);
-                                }
-                            });
+                                (extent.xmax > maxExtent.xmax || extent.ymax > maxExtent.ymax))) {
+                                maxExtent = extent;
+                                $scope.lazyLoadMarkers(extent);
+                            }
                         });
-                    }
-                });
-
-                self.map.on("update-end", function (e) {
-                    console.log('Update End ');
-                });
-
-                self.view.watch( "update", function(){
-                    console.log('Update End ');
-                });
-
+                    });
+                }
             };
 
 
