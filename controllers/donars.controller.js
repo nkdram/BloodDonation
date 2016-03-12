@@ -8,18 +8,18 @@ var _ = require('lodash'),
     common = require('./common.controller'),
     request = require('request');
 
-exports.registerDonar = function(donarData,callBack){
+exports.registerDonar = function(donorData,callBack){
     console.log('Inside Data Register');
     db.Donars.findOne({
         where:
             db.sequelize.or(
-            { phone: donarData.phone },
-            { email: donarData.email })
+            { phone: donorData.phone },
+            { email: donorData.email })
     }).then(function(Donar){
         if(Donar){
             //Update existing Token
             Donar.updateAttributes({
-                token : donarData.token,
+                token : donorData.token,
                 updated: common.getLocalizeCurrentDateTime()
             }).then(function (updatedData) {
                 callBack('Phone number or Email is already registered !',Donar);
@@ -27,24 +27,24 @@ exports.registerDonar = function(donarData,callBack){
         }
         else {
             console.log('Inside Creation');
-            var createDonarData = {
-                phone: donarData.phone,
-                email: donarData.email,
-                firstname: donarData.firstName,
-                lastname: donarData.lastName,
-                address: donarData.address,
-                bloodgroup: donarData.bloodgroup,
-                displayname:donarData.firstName+' '+donarData.lastName,
-                latlng: donarData.latlng,
-                lat: donarData.lat,
-                lng: donarData.lng,
-                token: donarData.token,
+            var createDonorData = {
+                phone: donorData.phone,
+                email: donorData.email,
+                firstname: donorData.firstName,
+                lastname: donorData.lastName,
+                address: donorData.address,
+                bloodgroup: donorData.bloodgroup,
+                displayname:donorData.firstName+' '+donorData.lastName,
+                latlng: donorData.latlng,
+                lat: donorData.lat,
+                lng: donorData.lng,
+                token: donorData.token,
                 active: '0', // Default Zero - during registration,
-                link: donarData.link,
+                link: donorData.link,
                 created: common.getLocalizeCurrentDateTime()
             };
 
-            db.Donars.create(createDonarData)
+            db.Donars.create(createDonorData)
                 .then(function (createdData) {
                     console.log('Created');
                     callBack(null,createdData);
@@ -56,12 +56,12 @@ exports.registerDonar = function(donarData,callBack){
     })
 };
 
-exports.updateVerification = function(donarData,code,callBack){
+exports.updateVerification = function(donorData,code,callBack){
     db.Donars.findOne({
         where:
             db.sequelize.or(
-                { phone: donarData.phone },
-                { email: donarData.email })
+                { phone: donorData.phone },
+                { email: donorData.email })
     }).then(function(Donar) {
         if (!Donar) {
             callBack('Phone number or Email is not registered yet!', null);
@@ -109,19 +109,19 @@ exports.loadMarkers = function(extent,callBack){
     })
 };
 
-exports.updateInfo = function(donarData,link,callBack){
+exports.updateInfo = function(donorData,link,callBack){
     db.Donars.findOne({
         where:
             db.sequelize.or(
-                { phone: donarData.phone },
-                { email: donarData.email })
+                { phone: donorData.phone },
+                { email: donorData.email })
     }).then(function(Donar) {
         if (!Donar) {
             callBack('Phone number or Email is not registered yet!', null);
         }
         else {
             if (Donar.link === link) {
-                Donar.updateAttributes(donarData).then(function (updatedData) {
+                Donar.updateAttributes(donorData).then(function (updatedData) {
                     callBack(null, updatedData);
                 });
             }

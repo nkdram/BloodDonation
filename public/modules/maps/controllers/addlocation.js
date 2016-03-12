@@ -23,7 +23,7 @@
                         socket.emit("register", {
                             phone_number: $scope.credentials.phone,
                             donarData : $scope.credentials
-                        });
+                        },{domainName: domainName});
                         $scope.loading = true;
                     }
                     else {

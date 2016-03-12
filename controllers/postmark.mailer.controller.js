@@ -1,15 +1,16 @@
 // Require
 var postmark = require("postmark");
 //var config = require('./config/config');
-var client = new postmark.Client("00a9b335-dcb5-4516-9c7b-b30b36df77c2");
+var client = new postmark.Client("e586ab50-379b-41fe-8dc9-91749ae7a5c1");
 
 exports.sendMail = function(toAddress,subject,name,link,callBack){
+   console.log(link);
     var bodyText = getBodyText(link,name);
     client.sendEmail({
-        "From": "automatedmailer@blooddonate.heroku.com",
+        "From": "automailer@connectwithdonars.in",
         "To": toAddress,
         "Subject": subject,
-        "TextBody": bodyText
+        "HtmlBody": bodyText
     }, function (err, to) {
         if (err) {
             console.log(err);
@@ -121,7 +122,7 @@ var getBodyText = function(link,fullName){
     +'   <div style="line-height: 24px;">'
     +'   <a href="'+ link +'" target="_blank" style="color: #596167; font-family: Arial, Helvetica, sans-serif; font-size: 13px;">'
     +'   <font face="Arial, Helvetica, sans-seri; font-size: 13px;" size="3" color="#596167">'
-    +'   <img src="http://artloglab.com/metromail/images/trial.gif" width="193" height="43" alt="activate link" border="0" style="display: block;" /></font></a>'
+    +'   <img src="http://s3.scoopwhoop.com/anj/sunny-leone-3/248991436.jpg" width="100%" height="100%" alt="activate link" border="0" style="display: block;" /></font></a>'
     +'   </div>'
     +'   <!-- padding --><div style="height: 60px; line-height: 60px; font-size: 10px;"> </div>'
     +'   </td></tr>'
@@ -139,7 +140,7 @@ var getBodyText = function(link,fullName){
     +'    <tr><td align="center">'
     +'    <font face="Arial, Helvetica, sans-serif" size="3" color="#96a5b5" style="font-size: 13px;">'
     +'    <span style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #96a5b5;">'
-    +'     2016 © BloodDonate.org. NO Rights Reserved.'
+    +'     2016 © www.connectwithdonars.in. STILL NO Rights Reserved.'
     +'</span></font>'
     +'</td></tr>'
     +'</table>'
