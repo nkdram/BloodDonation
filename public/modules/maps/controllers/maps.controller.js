@@ -128,7 +128,7 @@
                                 var lng = position ? position.longitude : 13.014060599999999;
 
                                 self.map = new Map({
-                                    basemap: 'streets',
+                                    basemap: 'topo',
                                     zoom: 15,
                                     center: [lat,lng]
                                 });
