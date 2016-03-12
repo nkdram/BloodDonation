@@ -37,7 +37,9 @@ module.exports = function(app) {
     app.route('/auth/signin').post(users.signin);
     app.route('/auth/signout').get(users.signout);
     app.route('/resource-proxy/Java/proxy.jsp').get(donars.proxy);
-
+    app.get('/zohoverify/verifyforzoho.html', function(req, res) {
+        res.sendFile((__dirname + '/zohoverify/verifyforzoho.html'));
+    });
     // Finish by binding the user middleware
     /*app.param('userId', users.userByID);*/
 };
