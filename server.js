@@ -4,6 +4,7 @@
 
 var app = require('./config/app')();
 
+
 // Bootstrap passport config
 require('./config/passport')();
 
@@ -30,31 +31,38 @@ var client = require('twilio')(accountSid, authToken)
 
 io.on('connection', function(socket) {
     console.log('socket.io connected');
-    socket.on('register', function(data) {
+    socket.on('register', function(data,domain) {
         var secretLink = speakeasy.generateSecret({length: 100});
         var code = speakeasy.totp({
             secret: secretLink.base32,
             encoding: 'base32'
         });
         console.log('Inside Register');
-        sendSMS(data.phone_number, code, socket,function(){
-         var donar = require('./controllers/donars.controller');
-            data.donarData.token = code;
-            data.donarData.link = secretLink.base32;
-            donar.registerDonar(data.donarData,function(err,data){
-                if(!err) {
-                    socket.emit('registered', {message: "",success:"Registered !!"});
-                }
-                else if(!data)
-                {
-                    socket.emit('registered', {message: "Error During Registering"});
-                }
-                else
-                {
-                    socket.emit('registered', {message:"",success: "Number is Already Registered!"});
-                }
+        var postmark = require('./controllers/postmark.mailer.controller');
+
+        var link = domain+"/activate/"+secretLink.base32;
+        var fullName = data.donarData.firstName+' '+data.donarData.lastName;
+
+        postmark.sendMail(data.donarData.email,'Thanks for Registering - Please verify your emailID to Donate',fullName,link,
+            function() {
+                var donar = require('./controllers/donars.controller');
+                data.donarData.token = code;
+                data.donarData.link = secretLink.base32;
+                donar.registerDonar(data.donarData, function (err, data) {
+                    if (!err) {
+                        socket.emit('registered', {message: "", success: "Registered !!"});
+                    }
+                    else if (!data) {
+                        socket.emit('registered', {message: "Error During Registering"});
+                    }
+                    else {
+                        socket.emit('registered', {message: "", success: "Number is Already Registered!"});
+                    }
+                });
             });
-        });
+        //sendSMS(data.phone_number, code, socket,
+
+        //});
     });
 
     socket.on('verify', function(data) {

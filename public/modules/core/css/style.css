@@ -83,5 +83,6 @@
 
 .esri-popup .esri-container{
     border: 1px solid blanchedalmond;
+    border-radius:8px;
 }
 

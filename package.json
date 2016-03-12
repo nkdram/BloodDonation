@@ -37,6 +37,7 @@
     "passport-local": "*",
     "pg": "*",
     "pg-hstore": "*",
+    "postmark": "^1.2.1",
     "request": "^2.69.0",
     "sequelize": "*",
     "serve-favicon": "2",

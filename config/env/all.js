@@ -10,6 +10,7 @@ module.exports = {
     secure: process.env.SECURE || false,
     templateEngine: 'swig',
     sessionSecret: 'Nothing :)',
+    postMarkKey:"00a9b335-dcb5-4516-9c7b-b30b36df77c2",
     assets: {
         lib: {
             css: [
