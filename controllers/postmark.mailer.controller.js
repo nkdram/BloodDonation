@@ -122,7 +122,7 @@ var getBodyText = function(link,fullName){
     +'   <div style="line-height: 24px;">'
     +'   <a href="'+ link +'" target="_blank" style="color: #596167; font-family: Arial, Helvetica, sans-serif; font-size: 13px;">'
     +'   <font face="Arial, Helvetica, sans-seri; font-size: 13px;" size="3" color="#596167">'
-    +'   <img src="http://s3.scoopwhoop.com/anj/sunny-leone-3/248991436.jpg" width="100%" height="100%" alt="activate link" border="0" style="display: block;" /></font></a>'
+    +'   <img src="http://www.connectwithdonars.in/assets/modules/core/img/FindPage.png" width="100%" height="100%" alt="activate link" border="0" style="display: block;" /></font></a>'
     +'   </div>'
     +'   <!-- padding --><div style="height: 60px; line-height: 60px; font-size: 10px;"> </div>'
     +'   </td></tr>'
