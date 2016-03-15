@@ -1,12 +1,12 @@
 (function () {
     'use strict';
 
-    angular.module('esrimaps').controller('ActivateController', ['$scope', '$http', '$location','esriLoader',
-        function ($scope, $http, $location,esriLoader) {
+    angular.module('esrimaps').controller('ActivateController', ['$scope', '$http', '$location','esriLoader','$window',
+        function ($scope, $http, $location,esriLoader,$window) {
 
             var search = $location.search();
             var url = search.uid;
-            var isValid = true;
+            $scope.isValid = true; $scope.loading = true;
 
             var socket ;
             var domainName = $location.protocol() + "://" + $location.host() + ":" + $location.port();
@@ -15,31 +15,34 @@
             }).then(function(loaded){
                 require([  domainName+ '/socket.io/socket.io.js' ],function(socketFile) {
                     socket = socketFile.connect();
-                    console.log(url);
                     if(url)
                     {
 
                         socket.emit('activateLink',{
                             link:url
                         });
-
-                        socket.on('activatedLink',function(data){
-                            if(!data.message)
-                            {
-
-                            }
-                            else
-                            {
-                                isValid = false;
-                            }
-                        });
                     }
                     else
                     {
-                        isValid = false;
+                        $scope.isValid = false;
                     }
+
+                    socket.on('activatedLink',function(data){
+                        $scope.loading = false;
+                        if(data.message)
+                        {
+                            $scope.isValid = false;
+                        }
+                        //Digest Error
+                        if (!$scope.$$phase){
+                            $scope.$apply();
+                        }
+                        $window.location.href = '/';
+                    });
                 });
             });
+
+
 
 
         }])

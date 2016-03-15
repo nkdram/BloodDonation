@@ -103,7 +103,7 @@ var getBodyText = function(link,fullName){
     +'    <!-- padding --><div style="height: 60px; line-height: 60px; font-size: 10px;"> </div>'
     +'    <div style="line-height: 44px;">'
     +'    <font face="Arial, Helvetica, sans-serif" size="5" color="#57697e" style="font-size: 34px;">'
-    +'    <span style="font-family: Arial, Helvetica, sans-serif; font-size: 34px; color: #57697e;">'
+    +'    <span style="font-family: Arial, Helvetica, sans-serif; font-size: 27px; color: #D27478;">'
     +'    Thanks for Registering ' + fullName + '.'
     +'</span></font>'
     +'</div>'

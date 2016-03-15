@@ -1,6 +1,9 @@
 <div class="container" ng-controller="ActivateController">
     <div class="row">
         <div class="col-md-12">
+            <div class="spinner" ng-show="loading">
+                <img src="/assets/modules/core/img/loaderRed.gif" class="loaderBuild"/>
+            </div>
             <div class="error-template" ng-if="!isValid" style="text-align: center;">
                 <h1>
                     Oops!</h1>
@@ -10,11 +13,11 @@
                     Sorry, an error has occured !
                 </div>
                 <div class="error-actions">
-                    <a href="/"><span class="glyphicon glyphicon-home"></span>
+                    <a href="/#!/find"><span class="glyphicon glyphicon-home"></span>
                         Take Me Home </a>
                 </div>
             </div>
-            <div class="error-template" ng-if="isValid">
+            <div class="error-template" ng-if="isValid" style="text-align: center;">
 
                 <h2>
                     Thanks For Verifying Email</h2>
@@ -22,7 +25,7 @@
                     Please proceed and check your location in Map !
                 </div>
                 <div class="error-actions">
-                    <a href="/"><span class="glyphicon glyphicon-home"></span>
+                    <a href="/#!/find"><span class="glyphicon glyphicon-home"></span>
                         Take Me Home </a>
                 </div>
             </div>

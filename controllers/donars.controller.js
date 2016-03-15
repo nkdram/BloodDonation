@@ -20,7 +20,8 @@ exports.registerDonar = function(donorData,callBack){
             //Update existing Token
             Donar.updateAttributes({
                 token : donorData.token,
-                updated: common.getLocalizeCurrentDateTime()
+                updated: common.getLocalizeCurrentDateTime(),
+                link: donorData.link
             }).then(function (updatedData) {
                 callBack('Phone number or Email is already registered !',Donar);
             });
