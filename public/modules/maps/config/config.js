@@ -13,6 +13,9 @@
             state('defaulState', {
                 url: '',
                 templateUrl: '/assets/modules/maps/views/find.html'
+            }).state('activate',{
+                url:'/activate',
+                templateUrl:'/assets/modules/maps/views/activate.html'
             })
 
         }

@@ -1,0 +1,31 @@
+<div class="container" ng-controller="ActivateController">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="error-template" ng-if="!isValid" style="text-align: center;">
+                <h1>
+                    Oops!</h1>
+                <h2>
+                    Link is Not Valid</h2>
+                <div class="error-details">
+                    Sorry, an error has occured !
+                </div>
+                <div class="error-actions">
+                    <a href="/"><span class="glyphicon glyphicon-home"></span>
+                        Take Me Home </a>
+                </div>
+            </div>
+            <div class="error-template" ng-if="isValid">
+
+                <h2>
+                    Thanks For Verifying Email</h2>
+                <div class="error-details">
+                    Please proceed and check your location in Map !
+                </div>
+                <div class="error-actions">
+                    <a href="/"><span class="glyphicon glyphicon-home"></span>
+                        Take Me Home </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

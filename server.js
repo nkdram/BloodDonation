@@ -40,7 +40,7 @@ io.on('connection', function(socket) {
         console.log('Inside Register');
         var postmark = require('./controllers/postmark.mailer.controller');
 
-        var link = domain+"/activate/"+secretLink.base32;
+        var link = domain.domainName+"/#!/activate?uid="+secretLink.base32;
         var fullName = data.donarData.firstName+' '+data.donarData.lastName;
 
         postmark.sendMail(data.donarData.email,'Thanks for Registering - Please verify your emailID to Donate',fullName,link,
@@ -75,6 +75,18 @@ io.on('connection', function(socket) {
                 socket.emit('verified', {message: "Code doesn't Match"});
             }
         });
+    });
+
+    socket.on('activateLink',function(data){
+        var donor = require('./controllers/donars.controller');
+        donor.updateVerificationByLink(data.link,function(err,data){
+            if(!err) {
+                socket.emit('activatedLink', {message: "",success:"Verified !!"});
+            }
+            else {
+                socket.emit('activatedLink', {message: "Link doesn't Exist"});
+            }
+        })
     });
 
     socket.on('loadMarkers',function(data){

@@ -113,7 +113,7 @@ var getBodyText = function(link,fullName){
     +'   <div style="line-height: 24px;">'
     +'   <font face="Arial, Helvetica, sans-serif" size="4" color="#57697e" style="font-size: 15px;">'
     +'   <span style="font-family: Arial, Helvetica, sans-serif; font-size: 15px; color: #57697e;">'
-    +'   Please click below link<br> to activate your account.'
+    +'   Please <a href="'+ link +'" target="_blank" style="color: #596167; font-family: Arial, Helvetica, sans-serif; font-size: 13px;"> CLICK </a> link to activate your account.'
     +'</span></font>'
     +'</div>'
     +'<!-- padding --><div style="height: 40px; line-height: 40px; font-size: 10px;"> </div>'

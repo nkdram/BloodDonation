@@ -83,6 +83,28 @@ exports.updateVerification = function(donorData,code,callBack){
     });
 };
 
+exports.updateVerificationByLink = function(donorLink,callBack){
+    db.Donars.findOne({
+        where:
+        {
+            link:donorLink
+        }
+    }).then(function(Donar) {
+        if (!Donar) {
+            callBack('Link is not valid!', null);
+        }
+        else{
+            Donar.updateAttributes({
+                active: '1',
+                updated: common.getLocalizeCurrentDateTime(),
+                link:''
+            }).then(function (updatedData) {
+                callBack(null, updatedData);
+            });
+        }
+    });
+};
+
 exports.loadMarkers = function(extent,callBack){
     console.log('Inside Load Markers');
     db.Donars.findAll({
